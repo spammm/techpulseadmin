@@ -49,7 +49,11 @@ export const CreateUser: React.FC = () => {
   return (
     <div className={styles.createUserContainer}>
       <h1>Создать пользователя</h1>
-      <form onSubmit={handleSubmit} className={styles.createUserForm}>
+      <form
+        onSubmit={handleSubmit}
+        className={styles.createUserForm}
+        autoComplete="off"
+      >
         <Input
           label="Логин"
           name="username"
@@ -57,6 +61,7 @@ export const CreateUser: React.FC = () => {
           onChange={handleChange}
           placeholder="Введите логин"
           required
+          autoComplete="off"
         />
         <Input
           label="Пароль"
@@ -66,6 +71,7 @@ export const CreateUser: React.FC = () => {
           placeholder="Введите пароль"
           type="password"
           required
+          autoComplete="new-password"
         />
         <div className={styles.formGroup}>
           <label htmlFor="role">Роль</label>

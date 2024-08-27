@@ -38,8 +38,13 @@ export const CreatePost: React.FC = () => {
   const handleTagChange = (newTags: string[]) => setTags(newTags);
   const handleSourceChange = (newSources: { name: string; link: string }[]) =>
     setSources(newSources);
-  const handleImageUpload = (links: { src: string; alt: string }[]) =>
+
+  const handleImageUpload = (links: { src: string; alt: string }[]) => {
     setImageLinks(links);
+    if (!image.src && links.length > 0) {
+      setImage({ src: links[0].src, alt: links[0].alt });
+    }
+  };
 
   const handleAuthorNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAuthorName(e.target.value);
@@ -109,8 +114,9 @@ export const CreatePost: React.FC = () => {
             label="URL главной картинки"
             name="imageUrl"
             onChange={(e) =>
-              setImage((prev) => ({ ...prev, src: e.target.value }))
+              setImage((prev) => ({ ...prev, src: e.target.value.trim() }))
             }
+            value={image.src}
           />
           <Input
             label="Название картинки"
@@ -118,6 +124,7 @@ export const CreatePost: React.FC = () => {
             onChange={(e) =>
               setImage((prev) => ({ ...prev, alt: e.target.value }))
             }
+            value={image.alt}
           />
         </div>
         <Input

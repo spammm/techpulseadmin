@@ -187,6 +187,7 @@ export const EditUser: React.FC = () => {
           placeholder="Введите новый пароль"
           type="password"
           disabled={!canEdit}
+          autoComplete="new-password"
         />
         <Input
           label="Подтверждение пароля"
@@ -196,6 +197,7 @@ export const EditUser: React.FC = () => {
           placeholder="Подтвердите новый пароль"
           type="password"
           disabled={!canEdit}
+          autoComplete="new-password"
         />
 
         <div className={styles.actions}>

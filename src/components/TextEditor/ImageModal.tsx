@@ -30,8 +30,16 @@ export const ImageModal: React.FC<ModalProps> = ({ onClose, onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.imageLink && formData.alt) {
-      onSubmit(formData);
+
+    const trimmedData = {
+      imageLink: formData.imageLink.trim(),
+      alt: formData.alt.trim(),
+      sourceLink: formData.sourceLink.trim(),
+      sourceName: formData.sourceName.trim(),
+    };
+
+    if (trimmedData.imageLink && trimmedData.alt) {
+      onSubmit(trimmedData);
       onClose();
     } else {
       alert('Пожалуйста, заполните обязательные поля.');

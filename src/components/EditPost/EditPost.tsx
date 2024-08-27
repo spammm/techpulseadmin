@@ -34,6 +34,7 @@ export const EditPost: React.FC = () => {
   const [published, setPublished] = useState<boolean>(false);
   const [authorName, setAuthorName] = useState<string>('');
   const [showAuthorName, setShowAuthorName] = useState<boolean>(false);
+  const [postUrl, setPostUrl] = useState<string>('');
 
   useEffect(() => {
     if (url) {
@@ -59,28 +60,36 @@ export const EditPost: React.FC = () => {
           alt: '',
         }
       );
+      setPostUrl(activePost.url || '');
     }
   }, [activePost]);
+
+  const handleImageUpload = (
+    uploadedImages: { src: string; alt: string }[]
+  ) => {
+    setImageLinks(uploadedImages);
+    if (!image.src && uploadedImages.length > 0) {
+      setImage({ src: uploadedImages[0].src, alt: uploadedImages[0].alt });
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!activePost || !activePost.id) return;
 
-    const formData: Omit<
-      IPost,
-      'id' | 'createdAt' | 'updatedAt' | 'url' | 'owner'
-    > = {
+    const formData: Omit<IPost, 'id' | 'createdAt' | 'updatedAt' | 'owner'> = {
       title,
       subtitle,
+      keywords,
       content,
       tags,
       sources,
       image,
       imageLinks,
-      keywords,
       published,
       authorName,
       showAuthorName,
+      url: postUrl,
       viewCount: 0,
     };
 
@@ -107,6 +116,14 @@ export const EditPost: React.FC = () => {
     <div className={styles.editPostForm}>
       <h1>Редактировать новость</h1>
       <form onSubmit={handleSubmit}>
+        <Input
+          label="URL статьи"
+          name="url"
+          value={postUrl}
+          onChange={(e) => setPostUrl(e.target.value)}
+          placeholder="Введите URL статьи"
+          required
+        />
         <Input
           label="Заголовок"
           name="title"
@@ -143,7 +160,7 @@ export const EditPost: React.FC = () => {
             label="URL главной картинки"
             name="imageUrl"
             onChange={(e) =>
-              setImage((prev) => ({ ...prev, src: e.target.value }))
+              setImage((prev) => ({ ...prev, src: e.target.value.trim() }))
             }
             value={image.src}
           />
@@ -157,7 +174,7 @@ export const EditPost: React.FC = () => {
           />
         </div>
         <ImageUploader
-          onUpload={setImageLinks}
+          onUpload={handleImageUpload}
           defaultImageLinks={imageLinks}
         />
         <Input
