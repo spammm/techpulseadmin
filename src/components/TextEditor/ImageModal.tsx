@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import styles from './Modal.module.css'; // Добавьте стили для модального окна
+import styles from './ImageModal.module.scss';
 
 interface ModalProps {
   onClose: () => void;

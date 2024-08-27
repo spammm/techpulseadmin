@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from 'react';
-import Quill from 'quill';
+import React, { useRef, useEffect, useState } from 'react';
+import Quill, { Range } from 'quill';
 import { FigureBlot } from './FigureBlot';
 import 'quill/dist/quill.snow.css';
 import styles from './TextEditor.module.css';
 import './FigureBlot.css';
+import { ImageModal } from './ImageModal';
 
 Quill.register(FigureBlot);
 
@@ -15,6 +16,9 @@ interface TextEditorProps {
 export const TextEditor: React.FC<TextEditorProps> = ({ onChange, value }) => {
   const quillRef = useRef<HTMLDivElement | null>(null);
   const quillInstanceRef = useRef<Quill | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [range, setRange] = useState<Range | null>(null);
 
   useEffect(() => {
     if (quillRef.current && !quillInstanceRef.current) {
@@ -32,26 +36,9 @@ export const TextEditor: React.FC<TextEditorProps> = ({ onChange, value }) => {
             ],
             handlers: {
               image: () => {
-                const range = quill.getSelection();
-                const imageLink = prompt(
-                  'Введите ссылку на изображение(обязательно):'
-                );
-                const alt = prompt(
-                  'Введите описание изображения(обязательно):'
-                );
-                const sourceLink = prompt(
-                  'Введите ссылку на источник изображения:'
-                );
-                const sourceName = prompt('Введите имя источника изображения:');
-
-                if (range && alt && imageLink) {
-                  quill.insertEmbed(range.index, 'figure', {
-                    src: imageLink,
-                    alt,
-                    sourceUrl: sourceLink || '',
-                    sourceName: sourceName || '',
-                  });
-                }
+                const currentRange = quill.getSelection();
+                setRange(currentRange);
+                setIsModalOpen(true);
               },
             },
           },
@@ -82,5 +69,32 @@ export const TextEditor: React.FC<TextEditorProps> = ({ onChange, value }) => {
     }
   }, [value]);
 
-  return <div ref={quillRef} className={styles.textEditor} />;
+  const handleModalSubmit = (data: {
+    imageLink: string;
+    alt: string;
+    sourceLink?: string;
+    sourceName?: string;
+  }) => {
+    if (range && quillInstanceRef.current) {
+      quillInstanceRef.current.insertEmbed(range.index, 'figure', {
+        src: data.imageLink,
+        alt: data.alt,
+        sourceUrl: data.sourceLink || '',
+        sourceName: data.sourceName || '',
+      });
+    }
+    setIsModalOpen(false);
+  };
+
+  return (
+    <div>
+      <div ref={quillRef} className={styles.textEditor} />
+      {isModalOpen && (
+        <ImageModal
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handleModalSubmit}
+        />
+      )}
+    </div>
+  );
 };
