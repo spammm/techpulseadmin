@@ -85,18 +85,18 @@ export const CreatePost: React.FC = () => {
       <h1>Создать новость</h1>
       <form onSubmit={handleSubmit}>
         <Input
-          label="Заголовок"
+          label={`Заголовок(Должен содержать ключевые слова, длинна до 80 символов)`}
           name="title"
           placeholder="Введите заголовок статьи"
           required
         />
         <Input
-          label="Подзаголовок"
+          label={`Подзаголовок(рекомендованная длина 160-200 символов)`}
           name="subtitle"
           placeholder="Введите подзаголовок"
         />
         <Input
-          label="Ключевые слова"
+          label="Ключевые слова(Используйте 3-6 ключевых слов/фраз через запятую)"
           name="keywords"
           placeholder="Перечислите ключи через запятую"
         />

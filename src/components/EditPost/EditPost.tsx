@@ -125,7 +125,7 @@ export const EditPost: React.FC = () => {
           required
         />
         <Input
-          label="Заголовок"
+          label={`Заголовок(Должен содержать ключевые слова, длинна до 80 символов, сейчас ${title.length})`}
           name="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -133,14 +133,14 @@ export const EditPost: React.FC = () => {
           required
         />
         <Input
-          label="Подзаголовок"
+          label={`Подзаголовок(рекомендованная длина 160-200 символов, сейчас ${subtitle.length})`}
           name="subtitle"
           value={subtitle}
           onChange={(e) => setSubtitle(e.target.value)}
           placeholder="Введите подзаголовок"
         />
         <Input
-          label="Ключевые слова"
+          label="Ключевые слова(Используйте 3-6 ключевых слов/фраз через запятую)"
           name="keywords"
           value={keywords}
           onChange={(e) => setKeywords(e.target.value)}
