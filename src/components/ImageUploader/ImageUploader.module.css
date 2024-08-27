@@ -1,0 +1,8 @@
+.imageLoader {
+  display: flex;
+  flex-direction: column;
+}
+
+.imageLoader label {
+  line-height: 30px;
+}
