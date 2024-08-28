@@ -1,10 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Quill, { Range } from 'quill';
 import { FigureBlot } from './FigureBlot';
-import 'quill/dist/quill.snow.css';
-import styles from './TextEditor.module.css';
-import './FigureBlot.css';
 import { ImageModal } from './ImageModal';
+
+import styles from './TextEditor.module.css';
+import 'quill/dist/quill.snow.css';
+import './FigureBlot.css';
+import './TextEditor.scss';
 
 Quill.register(FigureBlot);
 
@@ -68,32 +70,6 @@ export const TextEditor: React.FC<TextEditorProps> = ({ onChange, value }) => {
       }
     }
   }, [value]);
-
-  useEffect(() => {
-    if (quillInstanceRef.current) {
-      quillInstanceRef.current.clipboard.addMatcher(
-        Node.ELEMENT_NODE,
-        function (_, delta) {
-          const ops: { insert: string | Record<string, unknown> }[] = [];
-
-          delta.ops.forEach((op) => {
-            if (op.insert) {
-              if (typeof op.insert === 'string') {
-                ops.push({
-                  insert: op.insert.replace(/<[^>]*>/g, ''),
-                });
-              } else if (typeof op.insert === 'object') {
-                ops.push(op as { insert: Record<string, unknown> });
-              }
-            }
-          });
-
-          delta.ops = ops;
-          return delta;
-        }
-      );
-    }
-  }, []);
 
   const handleModalSubmit = (data: {
     imageLink: string;
