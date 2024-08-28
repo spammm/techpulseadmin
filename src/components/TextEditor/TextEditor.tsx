@@ -69,6 +69,32 @@ export const TextEditor: React.FC<TextEditorProps> = ({ onChange, value }) => {
     }
   }, [value]);
 
+  useEffect(() => {
+    if (quillInstanceRef.current) {
+      quillInstanceRef.current.clipboard.addMatcher(
+        Node.ELEMENT_NODE,
+        function (_, delta) {
+          const ops: { insert: string | Record<string, unknown> }[] = [];
+
+          delta.ops.forEach((op) => {
+            if (op.insert) {
+              if (typeof op.insert === 'string') {
+                ops.push({
+                  insert: op.insert.replace(/<[^>]*>/g, ''),
+                });
+              } else if (typeof op.insert === 'object') {
+                ops.push(op as { insert: Record<string, unknown> });
+              }
+            }
+          });
+
+          delta.ops = ops;
+          return delta;
+        }
+      );
+    }
+  }, []);
+
   const handleModalSubmit = (data: {
     imageLink: string;
     alt: string;
