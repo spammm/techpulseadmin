@@ -1,3 +1,4 @@
+import { IImage, IPostImage } from './image';
 import { IUser } from './user';
 
 export interface IPost {
@@ -8,8 +9,8 @@ export interface IPost {
   subtitle: string;
   content: string;
   tags: string[];
-  image: { src: string; alt: string };
-  imageLinks: { src: string; alt: string }[];
+  image: Partial<IPostImage>;
+  imageLinks?: IImage[];
   published: boolean;
   createdAt: string;
   updatedAt: string;

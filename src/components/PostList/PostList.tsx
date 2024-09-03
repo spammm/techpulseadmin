@@ -109,10 +109,10 @@ const PostList: React.FC = () => {
         ) : (
           posts.map((post) => (
             <div key={post.id} className={styles.postItem}>
-              {post.imageLinks && post.imageLinks[0] && (
+              {post.image && post.image.src && (
                 <img
-                  src={post.imageLinks[0].src}
-                  alt={post.imageLinks[0].alt}
+                  src={post.image.src}
+                  alt={post.image.alt}
                   className={styles.thumbnail}
                 />
               )}

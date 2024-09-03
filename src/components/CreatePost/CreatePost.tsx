@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../shared/Button';
 import { Input } from '../shared/Input';
-import { ImageUploader } from '../ImageUploader';
 import { SourceInput } from '../shared/SourceInput';
 import { TagInput } from '../shared/TagInput';
 import { createPost } from '../../api/postsApi';
@@ -15,13 +14,6 @@ export const CreatePost: React.FC = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [content, setContent] = useState<string>('');
   const [sources, setSources] = useState<{ name: string; link: string }[]>([]);
-  const [imageLinks, setImageLinks] = useState<{ src: string; alt: string }[]>(
-    []
-  );
-  const [image, setImage] = useState<{ src: string; alt: string }>({
-    src: '',
-    alt: '',
-  });
 
   const [authorName, setAuthorName] = useState<string>('');
   const [showAuthorName, setShowAuthorName] = useState<boolean>(false);
@@ -39,13 +31,6 @@ export const CreatePost: React.FC = () => {
   const handleSourceChange = (newSources: { name: string; link: string }[]) =>
     setSources(newSources);
 
-  const handleImageUpload = (links: { src: string; alt: string }[]) => {
-    setImageLinks(links);
-    if (!image.src && links.length > 0) {
-      setImage({ src: links[0].src, alt: links[0].alt });
-    }
-  };
-
   const handleAuthorNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAuthorName(e.target.value);
     if (e.target.value === '') {
@@ -56,17 +41,20 @@ export const CreatePost: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
+    const title = (form.elements.namedItem('title') as HTMLInputElement).value;
+
+    if (!title.trim()) {
+      alert('Пожалуйста, введите заголовок.');
+      return;
+    }
+
     const formData = {
-      title: (form.elements.namedItem('title') as HTMLInputElement).value,
+      title,
       subtitle: (form.elements.namedItem('subtitle') as HTMLInputElement).value,
       keywords: (form.elements.namedItem('keywords') as HTMLInputElement).value,
       content,
       tags,
       sources,
-      imageLinks,
-      image,
-      published: (form.elements.namedItem('published') as HTMLInputElement)
-        .checked,
       authorName,
       showAuthorName,
     };
@@ -82,53 +70,37 @@ export const CreatePost: React.FC = () => {
 
   return (
     <div className={styles.createPostForm}>
-      <h1>Создать новость</h1>
+      <h1>Создать черновик</h1>
       <form onSubmit={handleSubmit}>
         <Input
-          label={`Заголовок(Должен содержать ключевые слова, длинна до 80 символов)`}
+          label={`Заголовок (Должен содержать ключевые слова, длина до 80 символов)`}
           name="title"
           placeholder="Введите заголовок статьи"
           required
         />
         <Input
-          label={`Подзаголовок(рекомендованная длина 160-200 символов)`}
+          label={`Подзаголовок (рекомендованная длина 160-200 символов)`}
           name="subtitle"
           placeholder="Введите подзаголовок"
         />
         <Input
-          label="Ключевые слова(Используйте 3-6 ключевых слов/фраз через запятую)"
+          label="Ключевые слова (Используйте 3-6 ключевых слов/фраз через запятую)"
           name="keywords"
           placeholder="Перечислите ключи через запятую"
         />
         <TextEditor onChange={setContent} />
         <small>
-          Обязательно добавить теги(если подходят): "разработки", "гаджеты",
+          Обязательно добавить теги (если подходят): "разработки", "гаджеты",
           "технологии", "будущее", "аналитика", "прогнозы", "интервью", "лидеры"
         </small>
         <TagInput tags={tags} onChange={handleTagChange} />
+
+        <label>Источники материала самой новости:</label>
         <SourceInput sources={sources} onChange={handleSourceChange} />
-        <ImageUploader onUpload={handleImageUpload} />
-        <div>
-          <p>Главная картинка новости</p>
-          <Input
-            label="URL главной картинки"
-            name="imageUrl"
-            onChange={(e) =>
-              setImage((prev) => ({ ...prev, src: e.target.value.trim() }))
-            }
-            value={image.src}
-          />
-          <Input
-            label="Название картинки"
-            name="imageAlt"
-            onChange={(e) =>
-              setImage((prev) => ({ ...prev, alt: e.target.value }))
-            }
-            value={image.alt}
-          />
-        </div>
+
+        <hr />
         <Input
-          label="Имя автора"
+          label="Имя автора статьи"
           name="authorName"
           placeholder="Введите имя автора"
           value={authorName}
@@ -145,11 +117,8 @@ export const CreatePost: React.FC = () => {
             disabled={!authorName}
           />
         </div>
-        <div className={styles.checkboxGroup}>
-          <label htmlFor="published">Опубликовать</label>
-          <input type="checkbox" name="published" id="published" />
-        </div>
-        <Button text="Создать новость" type="submit" />
+
+        <Button text="Создать черновик" type="submit" />
       </form>
     </div>
   );

@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './userSlice';
 import { useDispatch } from 'react-redux';
 import postsSlice from './postsSlice';
+import imageSlice from './imageSlice';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     posts: postsSlice,
+    images: imageSlice,
   },
 });
 

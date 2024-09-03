@@ -1,48 +1,56 @@
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './ImageUploader.module.css';
 import { Input } from '../shared/Input';
 import { ImageList } from '../ImageList';
-import { uploadImage } from '../../api/uploadApi';
+import { RootState, AppDispatch } from '../../store/store';
+
+import { IPostImage } from '../../types/image';
+import {
+  loadImages,
+  uploadImageThunk,
+  updateImageThunk,
+} from '../../store/imageSlice';
 
 interface ImageUploaderProps {
-  onUpload: (links: { src: string; alt: string }[]) => void;
-  defaultImageLinks?: { src: string; alt: string }[];
+  postId?: number;
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({
-  onUpload,
-  defaultImageLinks = [],
-}) => {
+export const ImageUploader: React.FC<ImageUploaderProps> = ({ postId }) => {
   const id = useId();
-  const [imageLinks, setImageLinks] =
-    useState<{ src: string; alt: string }[]>(defaultImageLinks);
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading } = useSelector((state: RootState) => state.images);
 
   useEffect(() => {
-    if (defaultImageLinks.length > 0) {
-      setImageLinks(defaultImageLinks);
+    if (postId) dispatch(loadImages(postId));
+  }, [dispatch, postId]);
+
+  const getToken = () => localStorage.getItem('token');
+
+  const handleUpload = (file: File) => {
+    const token = getToken();
+    if (token) {
+      dispatch(uploadImageThunk({ file, postId }));
+    } else {
+      console.error('Необходимо войти в систему');
     }
-  }, [defaultImageLinks]);
+  };
 
-  useEffect(() => {
-    onUpload(imageLinks);
-  }, [imageLinks, onUpload]);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      handleUpload(e.target.files[0]);
+    }
+  };
 
-  const handleUpload = async (file: File) => {
-    try {
-      const token = localStorage.getItem('token'); // Получаем токен из localStorage
-      if (!token) {
-        throw new Error('Необходимо войти в систему');
-      }
-
-      const data = await uploadImage(file, token);
-      const link = {
-        src: `${import.meta.env.VITE_API_SERVER}${data.path}`,
-        alt: file.name,
-      };
-
-      setImageLinks((prevLinks) => [...prevLinks, link]);
-    } catch (error) {
-      console.error('Ошибка загрузки файла:', error);
+  const handleUpdateImage = (
+    imageId: number,
+    updatedData: Partial<IPostImage>
+  ) => {
+    const token = getToken();
+    if (token) {
+      dispatch(updateImageThunk({ imageId, updatedData }));
+    } else {
+      console.error('Необходимо войти в систему');
     }
   };
 
@@ -56,14 +64,11 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
           id={id}
           type="file"
           accept="image/*"
-          onChange={(e) => {
-            if (e.target.files && e.target.files.length > 0) {
-              handleUpload(e.target.files[0]);
-            }
-          }}
+          onChange={handleFileChange}
         />
       </div>
-      <ImageList imageLinks={imageLinks} />
+      {!loading && postId && <ImageList onUpdateImage={handleUpdateImage} />}
+      {loading && <p>Загрузка изображений...</p>}
     </div>
   );
 };

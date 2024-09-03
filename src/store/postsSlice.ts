@@ -92,7 +92,7 @@ export const editPost = createAsyncThunk(
     postData,
   }: {
     id: string;
-    postData: Omit<IPost, 'id' | 'createdAt' | 'updatedAt' | 'url' | 'owner'>;
+    postData: Omit<IPost, 'id' | 'createdAt' | 'updatedAt' | 'owner'>;
   }) => {
     const response = await updatePost(id, postData);
     return response;
@@ -111,14 +111,25 @@ const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    setActivePost(state, action: PayloadAction<IPost | null>) {
+    setActivePost(state: PostsState, action: PayloadAction<IPost | null>) {
       state.activePost = action.payload;
     },
-    setFilters(state, action: PayloadAction<Partial<PostsState['filters']>>) {
+    setFilters(
+      state: PostsState,
+      action: PayloadAction<Partial<PostsState['filters']>>
+    ) {
       state.filters = { ...state.filters, ...action.payload };
     },
-    setPage(state, action: PayloadAction<number>) {
+    setPage(state: PostsState, action: PayloadAction<number>) {
       state.pagination.currentPage = action.payload;
+    },
+    updateActivePostField<K extends keyof IPost>(
+      state: PostsState,
+      action: PayloadAction<{ field: K; value: IPost[K] }>
+    ) {
+      if (state.activePost) {
+        state.activePost[action.payload.field] = action.payload.value;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -176,6 +187,7 @@ const postsSlice = createSlice({
   },
 });
 
-export const { setActivePost, setFilters, setPage } = postsSlice.actions;
+export const { setActivePost, setFilters, setPage, updateActivePostField } =
+  postsSlice.actions;
 
 export default postsSlice.reducer;

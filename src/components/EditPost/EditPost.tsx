@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../shared/Button';
 import { Input } from '../shared/Input';
@@ -6,11 +6,20 @@ import { ImageUploader } from '../ImageUploader';
 import { SourceInput } from '../shared/SourceInput';
 import { TagInput } from '../shared/TagInput';
 import { TextEditor } from '../TextEditor';
-import { IPost } from '../../types/post';
 import { RootState, useAppDispatch } from '../../store/store';
 import { useSelector } from 'react-redux';
-import { editPost, loadPostByUrl } from '../../store/postsSlice';
+import {
+  editPost,
+  loadPostByUrl,
+  setActivePost,
+  updateActivePostField,
+} from '../../store/postsSlice';
 import styles from './EditPost.module.css';
+import { ImageSelector } from '../ImageSelector';
+import { IPost } from '../../types/post';
+import { IPostImage } from '../../types/image';
+
+const API_SERVER = import.meta.env.VITE_API_SERVER;
 
 export const EditPost: React.FC = () => {
   const { url } = useParams<{ url: string }>();
@@ -18,23 +27,6 @@ export const EditPost: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { activePost } = useSelector((state: RootState) => state.posts);
-  const [title, setTitle] = useState<string>('');
-  const [subtitle, setSubtitle] = useState<string>('');
-  const [keywords, setKeywords] = useState<string>('');
-  const [content, setContent] = useState<string>('');
-  const [tags, setTags] = useState<string[]>([]);
-  const [sources, setSources] = useState<{ name: string; link: string }[]>([]);
-  const [image, setImage] = useState<{ src: string; alt: string }>({
-    src: '',
-    alt: '',
-  });
-  const [imageLinks, setImageLinks] = useState<{ src: string; alt: string }[]>(
-    []
-  );
-  const [published, setPublished] = useState<boolean>(false);
-  const [authorName, setAuthorName] = useState<string>('');
-  const [showAuthorName, setShowAuthorName] = useState<boolean>(false);
-  const [postUrl, setPostUrl] = useState<string>('');
 
   useEffect(() => {
     if (url) {
@@ -43,53 +35,40 @@ export const EditPost: React.FC = () => {
   }, [url, dispatch]);
 
   useEffect(() => {
-    if (activePost) {
-      setTitle(activePost.title || '');
-      setSubtitle(activePost.subtitle || '');
-      setKeywords(activePost.keywords || '');
-      setContent(activePost.content || '');
-      setTags(activePost.tags || []);
-      setSources(activePost.sources || []);
-      setImageLinks(activePost.imageLinks || []);
-      setPublished(activePost.published || false);
-      setAuthorName(activePost.authorName || '');
-      setShowAuthorName(activePost.showAuthorName || false);
-      setImage(
-        activePost.image || {
-          src: '',
-          alt: '',
-        }
-      );
-      setPostUrl(activePost.url || '');
-    }
-  }, [activePost]);
+    return () => {
+      dispatch(setActivePost(null)); // Очищаем активный пост при размонтировании
+    };
+  }, [dispatch]);
 
-  const handleImageUpload = (
-    uploadedImages: { src: string; alt: string }[]
+  const handleFieldChange = <K extends keyof IPost>(
+    field: K,
+    value: IPost[K]
   ) => {
-    setImageLinks(uploadedImages);
-    if (!image.src && uploadedImages.length > 0) {
-      setImage({ src: uploadedImages[0].src, alt: uploadedImages[0].alt });
-    }
+    dispatch(updateActivePostField({ field, value }));
+  };
+
+  const handleImageSelect = ({
+    smallSrc,
+    alt,
+    source,
+    sourceUrl,
+    id,
+  }: IPostImage) => {
+    handleFieldChange('image', {
+      src: `${API_SERVER}${smallSrc}`,
+      alt,
+      source,
+      sourceUrl,
+      id,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!activePost || !activePost.id) return;
 
-    const formData: Omit<IPost, 'id' | 'createdAt' | 'updatedAt' | 'owner'> = {
-      title,
-      subtitle,
-      keywords,
-      content,
-      tags,
-      sources,
-      image,
-      imageLinks,
-      published,
-      authorName,
-      showAuthorName,
-      url: postUrl,
+    const formData = {
+      ...activePost,
       viewCount: 0,
     };
 
@@ -112,6 +91,8 @@ export const EditPost: React.FC = () => {
     }
   };
 
+  if (!activePost) return null; // Защита от рендеринга до загрузки поста
+
   return (
     <div className={styles.editPostForm}>
       <h1>Редактировать новость</h1>
@@ -119,69 +100,77 @@ export const EditPost: React.FC = () => {
         <Input
           label="URL статьи"
           name="url"
-          value={postUrl}
-          onChange={(e) => setPostUrl(e.target.value)}
+          value={activePost.url}
+          onChange={(e) => handleFieldChange('url', e.target.value)}
           placeholder="Введите URL статьи"
           required
         />
         <Input
-          label={`Заголовок(Должен содержать ключевые слова, длинна до 80 символов, сейчас ${title.length})`}
+          label={`Заголовок (Должен содержать ключевые слова, длина до 80 символов, сейчас ${activePost.title.length})`}
           name="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={activePost.title}
+          onChange={(e) => handleFieldChange('title', e.target.value)}
           placeholder="Введите заголовок статьи"
           required
         />
         <Input
-          label={`Подзаголовок(рекомендованная длина 160-200 символов, сейчас ${subtitle.length})`}
+          label={`Подзаголовок (рекомендованная длина 160-200 символов, сейчас ${activePost.subtitle.length})`}
           name="subtitle"
-          value={subtitle}
-          onChange={(e) => setSubtitle(e.target.value)}
+          value={activePost.subtitle}
+          onChange={(e) => handleFieldChange('subtitle', e.target.value)}
           placeholder="Введите подзаголовок"
         />
         <Input
-          label="Ключевые слова(Используйте 3-6 ключевых слов/фраз через запятую)"
+          label="Ключевые слова (Используйте 3-6 ключевых слов/фраз через запятую)"
           name="keywords"
-          value={keywords}
-          onChange={(e) => setKeywords(e.target.value)}
+          value={activePost.keywords}
+          onChange={(e) => handleFieldChange('keywords', e.target.value)}
           placeholder="Перечислите ключи через запятую"
         />
-        <TextEditor value={content} onChange={setContent} />
+        <TextEditor
+          value={activePost.content}
+          onChange={(newValue) => handleFieldChange('content', newValue)}
+        />
         <small>
-          Обязательно добавить теги(если подходят): "разработки", "гаджеты",
+          Обязательно добавить теги (если подходят): "разработки", "гаджеты",
           "технологии", "будущее", "аналитика", "прогнозы", "интервью", "лидеры"
         </small>
 
-        <TagInput tags={tags} onChange={setTags} />
-        <SourceInput sources={sources} onChange={setSources} />
+        <TagInput
+          tags={activePost.tags}
+          onChange={(newTags) => handleFieldChange('tags', newTags)}
+        />
+        <label>Источники материала самой новости:</label>
+        <SourceInput
+          sources={activePost.sources}
+          onChange={(newSources) => handleFieldChange('sources', newSources)}
+        />
         <div>
           <p>Главная картинка новости</p>
-          <Input
-            label="URL главной картинки"
-            name="imageUrl"
-            onChange={(e) =>
-              setImage((prev) => ({ ...prev, src: e.target.value.trim() }))
-            }
-            value={image.src}
+          <ImageSelector
+            onSelectImage={handleImageSelect}
+            defaultImageId={activePost.image?.id}
           />
+          <br />
           <Input
             label="Название картинки"
             name="imageAlt"
             onChange={(e) =>
-              setImage((prev) => ({ ...prev, alt: e.target.value }))
+              handleFieldChange('image', {
+                ...activePost.image,
+                alt: e.target.value,
+              })
             }
-            value={image.alt}
+            value={activePost.image?.alt || ''}
           />
         </div>
-        <ImageUploader
-          onUpload={handleImageUpload}
-          defaultImageLinks={imageLinks}
-        />
+        <ImageUploader postId={activePost.id} />
+        <hr />
         <Input
           label="Имя автора"
           name="authorName"
-          value={authorName}
-          onChange={(e) => setAuthorName(e.target.value)}
+          value={activePost.authorName}
+          onChange={(e) => handleFieldChange('authorName', e.target.value)}
           placeholder="Введите имя автора"
         />
         <div className={styles.checkboxGroup}>
@@ -190,9 +179,11 @@ export const EditPost: React.FC = () => {
             type="checkbox"
             name="showAuthorName"
             id="showAuthorName"
-            checked={showAuthorName}
-            onChange={(e) => setShowAuthorName(e.target.checked)}
-            disabled={!authorName}
+            checked={activePost.showAuthorName}
+            onChange={(e) =>
+              handleFieldChange('showAuthorName', e.target.checked)
+            }
+            disabled={!activePost.authorName}
           />
         </div>
         <div className={styles.checkboxGroup}>
@@ -201,8 +192,8 @@ export const EditPost: React.FC = () => {
             type="checkbox"
             name="published"
             id="published"
-            checked={published}
-            onChange={(e) => setPublished(e.target.checked)}
+            checked={activePost.published}
+            onChange={(e) => handleFieldChange('published', e.target.checked)}
           />
         </div>
         <Button text="Сохранить изменения" type="submit" />

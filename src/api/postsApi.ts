@@ -48,7 +48,17 @@ export const fetchPostByUrl = async (url: string): Promise<IPost> => {
 };
 
 export const createPost = async (
-  postData: Omit<IPost, 'id' | 'createdAt' | 'updatedAt' | 'url' | 'viewCount'>
+  postData: Omit<
+    IPost,
+    | 'id'
+    | 'createdAt'
+    | 'updatedAt'
+    | 'url'
+    | 'viewCount'
+    | 'published'
+    | 'image'
+    | 'imageLinks'
+  >
 ): Promise<IPost> => {
   const response = await api.post<IPost>(`/posts`, postData);
   return response.data;
@@ -56,7 +66,7 @@ export const createPost = async (
 
 export const updatePost = async (
   id: string,
-  postData: Omit<IPost, 'id' | 'createdAt' | 'updatedAt' | 'url'>
+  postData: Omit<IPost, 'id' | 'createdAt' | 'updatedAt'>
 ): Promise<IPost> => {
   const response = await api.put<IPost>(`/posts/${id}`, postData);
   return response.data;

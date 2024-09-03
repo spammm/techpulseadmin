@@ -1,21 +1,21 @@
-import { Input } from '../shared/Input';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { ImageItem } from './ImageItem';
+import { IPostImage } from '../../types/image';
 import styles from './ImageList.module.css';
 
 interface ImageListProps {
-  imageLinks: { src: string; alt: string }[];
+  onUpdateImage: (imageId: number, updatedData: Partial<IPostImage>) => void;
 }
 
-export const ImageList: React.FC<ImageListProps> = ({ imageLinks }) => {
-  const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
-    event.currentTarget.select();
-  };
+export const ImageList: React.FC<ImageListProps> = ({ onUpdateImage }) => {
+  const imageLinks = useSelector((state: RootState) => state.images.images);
+
   return (
     <div className={styles.list}>
-      {imageLinks.map((link, index) => (
-        <div key={index} className={styles.listItem}>
-          <img src={link.src} alt={link.alt} />
-          <Input defaultValue={link.src} readOnly onClick={handleClick} />
-        </div>
+      {imageLinks.map((image) => (
+        <ImageItem key={image.id} image={image} onUpdateImage={onUpdateImage} />
       ))}
     </div>
   );

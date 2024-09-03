@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { ImageSelector } from '../ImageSelector/ImageSelector';
+import { IPostImage } from '../../types/image';
 import styles from './ImageModal.module.scss';
+
+const API_SERVER = import.meta.env.VITE_API_SERVER;
 
 interface ModalProps {
   onClose: () => void;
@@ -13,36 +17,21 @@ interface ModalProps {
 }
 
 export const ImageModal: React.FC<ModalProps> = ({ onClose, onSubmit }) => {
-  const [formData, setFormData] = useState({
-    imageLink: '',
-    alt: '',
-    sourceLink: '',
-    sourceName: '',
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const [selectedImage, setSelectedImage] = useState<IPostImage | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const trimmedData = {
-      imageLink: formData.imageLink.trim(),
-      alt: formData.alt.trim(),
-      sourceLink: formData.sourceLink.trim(),
-      sourceName: formData.sourceName.trim(),
-    };
-
-    if (trimmedData.imageLink && trimmedData.alt) {
-      onSubmit(trimmedData);
+    if (selectedImage) {
+      onSubmit({
+        imageLink: `${API_SERVER}${selectedImage.src}`,
+        alt: selectedImage.alt,
+        sourceLink: selectedImage.sourceUrl || '',
+        sourceName: selectedImage.source || '',
+      });
       onClose();
     } else {
-      alert('Пожалуйста, заполните обязательные поля.');
+      alert('Пожалуйста, выберите изображение.');
     }
   };
 
@@ -52,49 +41,33 @@ export const ImageModal: React.FC<ModalProps> = ({ onClose, onSubmit }) => {
         <h2>Добавить изображение</h2>
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <label htmlFor="imageLink">
-              Ссылка на изображение (обязательно)
-            </label>
-            <input
-              type="text"
-              id="imageLink"
-              name="imageLink"
-              value={formData.imageLink}
-              onChange={handleChange}
-              required
-            />
+            <label>Выберите изображение (обязательно)</label>
+            <ImageSelector onSelectImage={setSelectedImage} />
           </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="alt">Описание изображения (обязательно)</label>
-            <input
-              type="text"
-              id="alt"
-              name="alt"
-              value={formData.alt}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="sourceLink">Ссылка на источник изображения</label>
-            <input
-              type="text"
-              id="sourceLink"
-              name="sourceLink"
-              value={formData.sourceLink}
-              onChange={handleChange}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="sourceName">Имя источника изображения</label>
-            <input
-              type="text"
-              id="sourceName"
-              name="sourceName"
-              value={formData.sourceName}
-              onChange={handleChange}
-            />
-          </div>
+          {selectedImage && (
+            <>
+              <div className={styles.formGroup}>
+                <label>Описание изображения (обязательно)</label>
+                <input type="text" value={selectedImage.alt} readOnly />
+              </div>
+              <div className={styles.formGroup}>
+                <label>Ссылка на источник изображения</label>
+                <input
+                  type="text"
+                  value={selectedImage.sourceUrl || ''}
+                  readOnly
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label>Имя источника изображения</label>
+                <input
+                  type="text"
+                  value={selectedImage.source || ''}
+                  readOnly
+                />
+              </div>
+            </>
+          )}
           <div className={styles.modalActions}>
             <button type="button" onClick={onClose}>
               Отмена
