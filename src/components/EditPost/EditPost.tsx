@@ -20,6 +20,7 @@ import { IPost } from '../../types/post';
 import { IPostImage } from '../../types/image';
 
 const API_SERVER = import.meta.env.VITE_API_SERVER;
+const CLIENT_SITE_HOST = import.meta.env.VITE_SITE_HOST;
 
 export const EditPost: React.FC = () => {
   const { url } = useParams<{ url: string }>();
@@ -196,6 +197,17 @@ export const EditPost: React.FC = () => {
             onChange={(e) => handleFieldChange('published', e.target.checked)}
           />
         </div>
+        {activePost.published && (
+          <div>
+            <a
+              href={`${CLIENT_SITE_HOST}/news/${activePost.url}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Открыть страницу
+            </a>
+          </div>
+        )}
         <Button text="Сохранить изменения" type="submit" />
       </form>
     </div>

@@ -16,6 +16,8 @@ import { useDebounce } from '../../hooks';
 
 import styles from './PostList.module.scss';
 
+const CLIENT_SITE_HOST = import.meta.env.VITE_SITE_HOST;
+
 const PostList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -146,6 +148,18 @@ const PostList: React.FC = () => {
                     </span>
                   ))}
                 </div>
+                {post.published && (
+                  <>
+                    <br />
+                    <a
+                      href={`${CLIENT_SITE_HOST}/news/${post.url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Открыть страницу на основном сайте
+                    </a>
+                  </>
+                )}
                 {user?.role === 'admin' && (
                   <div className={styles.actions}>
                     <Button
