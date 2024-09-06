@@ -172,6 +172,7 @@ const postsSlice = createSlice({
         state.posts.unshift(action.payload);
       })
       .addCase(editPost.fulfilled, (state, action) => {
+        state.activePost = action.payload;
         const index = state.posts.findIndex(
           (post) => post.id === action.payload.id
         );

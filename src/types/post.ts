@@ -21,4 +21,5 @@ export interface IPost {
   viewCount: number;
   owner?: IUser;
   comments?: [];
+  telegramMessageId?: number;
 }
