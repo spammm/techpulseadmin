@@ -1,0 +1,11 @@
+.ql-video-blot {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.ql-video-blot iframe {
+  width: 100%;
+  height: 450px;
+}

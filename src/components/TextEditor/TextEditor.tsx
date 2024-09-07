@@ -1,14 +1,17 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Quill, { Range } from 'quill';
 import { FigureBlot } from './FigureBlot';
+import { VideoBlot } from './VideoBlot';
 import { ImageModal } from './ImageModal';
 
 import styles from './TextEditor.module.css';
 import 'quill/dist/quill.snow.css';
 import './FigureBlot.css';
+import './VideoBlot.css';
 import './TextEditor.scss';
 
 Quill.register(FigureBlot);
+Quill.register(VideoBlot);
 
 interface TextEditorProps {
   value?: string;
@@ -30,9 +33,9 @@ export const TextEditor: React.FC<TextEditorProps> = ({ onChange, value }) => {
         modules: {
           toolbar: {
             container: [
-              [{ header: [1, 2, false] }],
+              [{ header: [2, 3, 4, false] }],
               ['bold', 'italic', 'underline'],
-              ['link', 'image', 'blockquote'],
+              ['link', 'image', 'blockquote', 'video'],
               [{ list: 'ordered' }, { list: 'bullet' }],
               ['clean'],
             ],
@@ -41,6 +44,15 @@ export const TextEditor: React.FC<TextEditorProps> = ({ onChange, value }) => {
                 const currentRange = quill.getSelection();
                 setRange(currentRange);
                 setIsModalOpen(true);
+              },
+              video: () => {
+                const url = prompt('Введите ссылку на видео:');
+                if (url && quill) {
+                  const range = quill.getSelection();
+                  if (range) {
+                    quill.insertEmbed(range.index, 'video', { url });
+                  }
+                }
               },
             },
           },
