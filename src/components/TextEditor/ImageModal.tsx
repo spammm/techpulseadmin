@@ -21,6 +21,7 @@ export const ImageModal: React.FC<ModalProps> = ({ onClose, onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    e.stopPropagation();
 
     if (selectedImage) {
       onSubmit({
