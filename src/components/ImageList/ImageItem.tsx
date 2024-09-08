@@ -17,7 +17,6 @@ export const ImageItem: React.FC<ImageItemProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedImage, setEditedImage] = useState<IPostImage>(image);
-
   const handleEditChange = (field: keyof IPostImage, value: string) => {
     setEditedImage({ ...editedImage, [field]: value });
     setIsEditing(true);
@@ -61,6 +60,8 @@ export const ImageItem: React.FC<ImageItemProps> = ({
           onChange={(e) => handleEditChange('source', e.target.value)}
           className={styles.input}
         />
+        <input type="hidden" name="width" defaultValue={editedImage?.width} />
+        <input type="hidden" name="height" defaultValue={editedImage?.height} />
         {isEditing && (
           <Button
             className={styles.saveButton}

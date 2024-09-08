@@ -14,11 +14,18 @@ class FigureBlot extends BlockEmbed {
     alt: string;
     sourceUrl?: string;
     sourceName?: string;
+    width: number;
+    height: number;
   }): HTMLElement {
     const node = super.create() as HTMLElement;
     const img = document.createElement('img');
+
+    const realHeight = (value.height * 800) / value.width;
+
     img.setAttribute('src', value.src);
     img.setAttribute('alt', value.alt);
+    img.setAttribute('width', '800');
+    img.setAttribute('height', realHeight.toString());
 
     const figcaption = document.createElement('figcaption');
 
@@ -43,6 +50,8 @@ class FigureBlot extends BlockEmbed {
     return {
       src: img?.getAttribute('src') || '',
       alt: img?.getAttribute('alt') || '',
+      width: img?.getAttribute('width') || '',
+      height: img?.getAttribute('height') || '',
       sourceUrl: link?.getAttribute('href') || '',
       sourceName: link?.textContent || '',
     };

@@ -54,6 +54,8 @@ export const EditPost: React.FC = () => {
     source,
     sourceUrl,
     id,
+    smallWidth,
+    smallHeight,
   }: IPostImage) => {
     handleFieldChange('image', {
       src: `${API_SERVER}${smallSrc}`,
@@ -61,6 +63,8 @@ export const EditPost: React.FC = () => {
       source,
       sourceUrl,
       id,
+      width: smallWidth,
+      height: smallHeight,
     });
   };
 
@@ -92,7 +96,7 @@ export const EditPost: React.FC = () => {
     }
   };
 
-  if (!activePost) return null; // Защита от рендеринга до загрузки поста
+  if (!activePost) return null;
 
   return (
     <div className={styles.editPostForm}>

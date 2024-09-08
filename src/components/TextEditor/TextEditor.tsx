@@ -84,17 +84,21 @@ export const TextEditor: React.FC<TextEditorProps> = ({ onChange, value }) => {
   }, [value]);
 
   const handleModalSubmit = (data: {
-    imageLink: string;
+    src: string;
     alt: string;
-    sourceLink?: string;
+    sourceUrl?: string;
     sourceName?: string;
+    width?: number;
+    height?: number;
   }) => {
     if (range && quillInstanceRef.current) {
       quillInstanceRef.current.insertEmbed(range.index, 'figure', {
-        src: data.imageLink,
+        src: data.src,
         alt: data.alt,
-        sourceUrl: data.sourceLink || '',
+        sourceUrl: data.sourceUrl || '',
         sourceName: data.sourceName || '',
+        width: data?.width,
+        height: data?.height,
       });
     }
     setIsModalOpen(false);

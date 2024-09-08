@@ -9,10 +9,12 @@ const API_SERVER = import.meta.env.VITE_API_SERVER;
 interface ModalProps {
   onClose: () => void;
   onSubmit: (data: {
-    imageLink: string;
+    src: string;
     alt: string;
-    sourceLink?: string;
+    sourceUrl?: string;
     sourceName?: string;
+    width?: number;
+    height?: number;
   }) => void;
 }
 
@@ -22,13 +24,14 @@ export const ImageModal: React.FC<ModalProps> = ({ onClose, onSubmit }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     e.stopPropagation();
-
     if (selectedImage) {
       onSubmit({
-        imageLink: `${API_SERVER}${selectedImage.src}`,
+        src: `${API_SERVER}${selectedImage.src}`,
         alt: selectedImage.alt,
-        sourceLink: selectedImage.sourceUrl || '',
+        sourceUrl: selectedImage.sourceUrl || '',
         sourceName: selectedImage.source || '',
+        width: selectedImage.width || 800,
+        height: selectedImage.height || 600,
       });
       onClose();
     } else {
