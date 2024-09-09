@@ -20,12 +20,10 @@ class FigureBlot extends BlockEmbed {
     const node = super.create() as HTMLElement;
     const img = document.createElement('img');
 
-    const realHeight = (value.height * 800) / value.width;
-
     img.setAttribute('src', value.src);
     img.setAttribute('alt', value.alt);
-    img.setAttribute('width', '800');
-    img.setAttribute('height', realHeight.toString());
+    img.setAttribute('width', value?.width.toString() || '800');
+    img.setAttribute('height', value?.height.toString() || '600');
 
     const figcaption = document.createElement('figcaption');
 
