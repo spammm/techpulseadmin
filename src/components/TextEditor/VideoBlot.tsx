@@ -21,6 +21,10 @@ class VideoBlot extends BlockEmbed {
   }
 
   static sanitizeUrl(url: string) {
+    if (!url) {
+      console.warn('URL is missing or invalid for video embed.');
+      return ''; // Вернуть пустую строку, если URL отсутствует
+    }
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
       return VideoBlot.convertYouTubeUrl(url);
     } else if (url.includes('rutube.ru')) {

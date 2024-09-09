@@ -47,11 +47,13 @@ export const TextEditor: React.FC<TextEditorProps> = ({ onChange, value }) => {
               },
               video: () => {
                 const url = prompt('Введите ссылку на видео:');
-                if (url && quill) {
+                if (url && url.trim() && quill) {
                   const range = quill.getSelection();
                   if (range) {
                     quill.insertEmbed(range.index, 'video', { url });
                   }
+                } else {
+                  alert('Пожалуйста, введите корректную ссылку на видео.');
                 }
               },
             },

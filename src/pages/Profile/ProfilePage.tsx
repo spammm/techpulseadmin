@@ -215,6 +215,7 @@ export const ProfilePage: React.FC = () => {
           onChange={handleChange}
           placeholder="Введите новый пароль"
           type="password"
+          autoComplete="new-password"
         />
         <Input
           label="Подтверждение пароля"
@@ -223,6 +224,7 @@ export const ProfilePage: React.FC = () => {
           onChange={handleChange}
           placeholder="Подтвердите новый пароль"
           type="password"
+          autoComplete="new-password"
         />
 
         <div className={styles.profileActions}>
