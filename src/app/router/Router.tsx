@@ -4,13 +4,13 @@ import { MainLayout } from '../layouts';
 import { CommentsPage } from '../../pages/comments';
 import { CreateUserPage } from '../../pages/createUsers';
 import { EditPostPage } from '../../pages/editPost';
-import { EditUserPage } from '../../pages/editUser/EditUserPage';
+import { EditUserPage } from '../../pages/editUser/EditUserPage.tsx';
 import { LoginPage } from '../../pages/login';
 import { NewPostPage } from '../../pages/newPost';
 import { PostsPage } from '../../pages/posts';
 import { ProfilePage } from '../../pages/profile';
 import { UserListPage } from '../../pages/users';
-import DashboardPage from 'pages/dashboard/DashboardPage';
+import DashboardPage from 'pages/dashboard/DashboardPage.tsx';
 
 export const AppRouter: React.FC = () => {
   return (
