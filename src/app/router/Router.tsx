@@ -1,16 +1,16 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { MainLayout } from '../layouts';
 import { PrivateRoute } from './PrivateRoute';
+import { MainLayout } from '../layouts';
 import { CommentsPage } from '../../pages/comments';
 import { CreateUserPage } from '../../pages/createUsers';
 import { DashboardPage } from '../../pages/dashboard';
 import { EditPostPage } from '../../pages/editPost';
 import { EditUserPage } from '../../pages/editUser';
+import { LoginPage } from '../../pages/login';
 import { NewPostPage } from '../../pages/newPost';
+import { PostsPage } from '../../pages/posts';
 import { ProfilePage } from '../../pages/profile';
 import { UserListPage } from '../../pages/users';
-import { LoginPage } from '../../pages/login';
-import { PostsPage } from '../../pages/posts';
 
 export const AppRouter: React.FC = () => {
   return (
