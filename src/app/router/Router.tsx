@@ -1,16 +1,16 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { MainLayout } from '../layouts';
-import { CommentsPage } from '../../pages/comments';
-import { CreateUserPage } from '../../pages/createUsers';
-import { EditPostPage } from '../../pages/editPost';
-import { EditUserPage } from '../../pages/editUser/EditUserPage.tsx';
-import { LoginPage } from '../../pages/login';
-import { NewPostPage } from '../../pages/newPost';
-import { PostsPage } from '../../pages/posts';
-import { ProfilePage } from '../../pages/profile';
-import { UserListPage } from '../../pages/users';
-import DashboardPage from 'pages/dashboard/DashboardPage.tsx';
+import { CommentsPage } from '../../sections/comments';
+import { CreateUserPage } from '../../sections/createUsers';
+import { DashboardPage } from '../../sections/dashboard';
+import { EditPostPage } from '../../sections/editPost';
+import { EditUserPage } from '../../sections/editUser';
+import { LoginPage } from '../../sections/login';
+import { NewPostPage } from '../../sections/newPost';
+import { PostsPage } from '../../sections/posts';
+import { ProfilePage } from '../../sections/profile';
+import { UserListPage } from '../../sections/users';
 
 export const AppRouter: React.FC = () => {
   return (
