@@ -3,14 +3,14 @@ import { PrivateRoute } from './PrivateRoute';
 import { MainLayout } from '../layouts';
 import { CommentsPage } from '../../pages/comments';
 import { CreateUserPage } from '../../pages/createUsers';
-import { DashboardPage } from '../../pages/dashboard';
 import { EditPostPage } from '../../pages/editPost';
-import { EditUserPage } from '../../pages/editUser';
+import { EditUserPage } from '../../pages/editUser/EditUserPage';
 import { LoginPage } from '../../pages/login';
 import { NewPostPage } from '../../pages/newPost';
 import { PostsPage } from '../../pages/posts';
 import { ProfilePage } from '../../pages/profile';
 import { UserListPage } from '../../pages/users';
+import DashboardPage from 'pages/dashboard/DashboardPage';
 
 export const AppRouter: React.FC = () => {
   return (
