@@ -1,0 +1,44 @@
+.contactFormContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contactFormGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+
+  input {
+    flex: 1;
+  }
+}
+
+.addButton,
+.deleteButton {
+  flex-shrink: 0;
+}
+
+.addButton {
+  align-self: flex-start;
+  margin-top: 10px;
+  background-color: #4caf50;
+  color: white;
+}
+
+.deleteButton {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: #c0392b;
+}
+
+.addButton:hover {
+  background-color: #388e3c;
+}

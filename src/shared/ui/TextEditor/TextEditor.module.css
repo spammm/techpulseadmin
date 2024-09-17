@@ -1,0 +1,13 @@
+.textEditor {
+  min-height: 200px;
+}
+
+.ql-container {
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.ql-editor {
+  min-height: 100%;
+  padding: 10px;
+}

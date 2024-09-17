@@ -1,10 +1,9 @@
-import React from 'react';
-import { CreatePost } from '../../components/CreatePost';
+import { CreatePostForm } from '../../features/createPost';
 
 export const NewPostPage: React.FC = () => {
   return (
     <section>
-      <CreatePost />
+      <CreatePostForm />
     </section>
   );
 };

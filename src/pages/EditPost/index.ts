@@ -1,1 +1,1 @@
-export { EditPostPage } from './EditPost';
+export { EditPostPage } from './EditPostPage';

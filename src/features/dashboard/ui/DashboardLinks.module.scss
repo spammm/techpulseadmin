@@ -1,0 +1,29 @@
+.linksContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.linkCard {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: left;
+  text-decoration: none;
+  color: #343a40;
+  width: calc(33% - 1rem);
+
+  &:hover {
+    background-color: #e9ecef;
+  }
+
+  h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #007bff;
+  }
+
+
+}
