@@ -21,7 +21,7 @@ export const updateUserProfile = async (
   return response.data;
 };
 
-export const deleteUser = async (userId: string): Promise<void> => {
+export const deleteUser = async (userId: number): Promise<void> => {
   await api.delete(`/users/${userId}`);
 };
 

@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchUsers as fetchUsersApi } from '../../../shared/api/usersApi';
+import {
+  deleteUser as deleteUserApi,
+  fetchUsers as fetchUsersApi,
+} from '../../../shared/api/usersApi';
 import { IUser } from '../../../shared/types/user';
 
 interface UserState {
@@ -26,6 +29,14 @@ export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
   const users = await fetchUsersApi();
   return users;
 });
+
+export const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async (userId: number) => {
+    await deleteUserApi(userId);
+    return userId;
+  }
+);
 
 const userSlice = createSlice({
   name: 'user',
@@ -81,6 +92,12 @@ const userSlice = createSlice({
       .addCase(fetchUsers.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || null;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.users = state.users.filter((user) => user.id !== action.payload);
+        state.filteredUsers = state.filteredUsers.filter(
+          (user) => user.id !== action.payload
+        );
       });
   },
 });

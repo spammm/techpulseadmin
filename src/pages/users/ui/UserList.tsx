@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { IUser } from '../../../shared/types/user';
+import { useAppDispatch, useAppSelector } from '../../../shared/model';
+import { deleteUser } from '../../../features/users';
 
 import styles from './UserList.module.scss';
 
@@ -8,6 +10,17 @@ type UserListProps = {
 };
 
 export const UserList: React.FC<UserListProps> = ({ users }) => {
+  const dispatch = useAppDispatch();
+  const currentProfileRole = useAppSelector(
+    (state) => state.profile.profile?.role
+  );
+
+  const handleDelete = (userId: number) => {
+    if (window.confirm('Вы уверены, что хотите удалить этого пользователя?')) {
+      dispatch(deleteUser(userId));
+    }
+  };
+
   return (
     <ul className={styles.userList}>
       {users.map((user) => (
@@ -29,6 +42,14 @@ export const UserList: React.FC<UserListProps> = ({ users }) => {
             >
               {user.disable ? 'Заблокирован' : 'Активный'}
             </p>
+            {currentProfileRole === 'admin' && (
+              <button
+                className={styles.deleteButton}
+                onClick={() => handleDelete(user.id)}
+              >
+                Удалить
+              </button>
+            )}
           </div>
         </li>
       ))}
