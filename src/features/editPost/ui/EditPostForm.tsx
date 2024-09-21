@@ -12,6 +12,7 @@ import {
   ImageUploader,
   Notification,
 } from '../../../shared/ui';
+import { useAppSelector } from '../../../shared/model';
 
 import styles from './EditPostForm.module.scss';
 
@@ -31,11 +32,14 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
   handleSubmit,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isCustomPublishDate, setIsCustomPublishDate] = useState(false);
   const [notification, setNotification] = useState<{
     message: string;
     type: 'success' | 'error';
   } | null>(null);
+
+  const currentUser = useAppSelector((state) => state.profile.profile);
+  const isAdmin = currentUser?.role === 'admin';
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,6 +51,10 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
     if (!activePost.url) {
       setNotification({ message: 'Url обязателен', type: 'error' });
       return;
+    }
+
+    if (!isCustomPublishDate) {
+      delete activePost.publishedAt;
     }
 
     setIsLoading(true);
@@ -165,6 +173,31 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
             onChange={(checked) => handleFieldChange('published', checked)}
           />
         </div>
+
+        {isAdmin && (
+          <div className={styles.publishDateContainer}>
+            <Checkbox
+              id="customPublishDate"
+              name="customPublishDate"
+              label="Указать дату публикации"
+              checked={isCustomPublishDate}
+              onChange={(checked) => setIsCustomPublishDate(checked)}
+            />
+            <Input
+              label="Дата публикации"
+              name="publishedAt"
+              type="text"
+              value={
+                activePost.publishedAt && isCustomPublishDate
+                  ? activePost.publishedAt
+                  : ''
+              }
+              onChange={(e) => handleFieldChange('publishedAt', e.target.value)}
+              disabled={!isCustomPublishDate}
+            />
+          </div>
+        )}
+
         {activePost.published && (
           <div>
             <a
@@ -176,6 +209,7 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
             </a>
           </div>
         )}
+
         <Button text="Сохранить изменения" type="submit" loading={isLoading} />
       </form>
     </>

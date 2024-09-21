@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { EditUserForm } from '../../features/editUser';
 import { fetchUserById } from '../../shared/model/store/userSlice';
-import { RootState, useAppDispatch } from '../../app/appStore';
+import { useAppDispatch } from '../../app/appStore';
+import { useAppSelector } from '../../shared/model';
 
 import styles from './EditUserPage.module.scss';
 
@@ -13,7 +13,7 @@ export const EditUserPage: React.FC = () => {
 
   const userId = id ? parseInt(id, 10) : null;
 
-  const userProfile = useSelector((state: RootState) =>
+  const userProfile = useAppSelector((state) =>
     state.user.users.find((user) => user.id === userId)
   );
 
