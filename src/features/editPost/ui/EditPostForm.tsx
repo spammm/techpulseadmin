@@ -53,10 +53,6 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
       return;
     }
 
-    if (!isCustomPublishDate) {
-      delete activePost.publishedAt;
-    }
-
     setIsLoading(true);
     try {
       await handleSubmit(e);
