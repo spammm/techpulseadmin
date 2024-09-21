@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/appStore';
 import { Input, Button, Notification } from '../../../shared/ui';
 import { login } from '../model/authSlice';
+import { fetchUserProfile } from '../../profile';
 
 import styles from './LoginForm.module.scss';
 
@@ -19,6 +20,7 @@ export const LoginForm: React.FC = () => {
     const resultAction = await dispatch(login({ username, password }));
 
     if (login.fulfilled.match(resultAction)) {
+      dispatch(fetchUserProfile());
       navigate('/');
     }
   };
