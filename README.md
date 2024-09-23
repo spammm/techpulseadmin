@@ -1,50 +1,89 @@
-# React + TypeScript + Vite
+# TechPulse Admin Panel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TechPulse Admin Panel — это система для управления контентом новостного портала TechPulse. В админке предусмотрены возможности для управления постами, пользователями, комментариями, и аналитикой. Важные функциональные элементы включают управление ролями, модерацию контента и возможность управлять тегами и категориями. Авторизация с JWT токеном. Разработано для работы с [апи](https://github.com/spammm/techpulseapi) и [клиентской частью новостного сайта](https://github.com/spammm/techpulseclient).
 
-Currently, two official plugins are available:
+## Оглавление
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Функциональные возможности](#функциональные-возможности)
+- [Технологический стек](#технологический-стек)
+- [Установка и запуск](#установка-и-запуск)
+- [Скрипты](#скрипты)
+- [Роли и доступы](#роли-и-доступы)
+- [Контрибьюция](#контрибьюция)
 
-## Expanding the ESLint configuration
+## Функциональные возможности
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Управление постами**: Создание, редактирование, удаление постов с поддержкой WYSIWYG редактора для форматирования контента, редактор дополнен удобной вставкой медиаконтента с полным описанием изображений и возможности вставки видео по ссылке с большинства популярных видео сервисов.
+- **Управление пользователями**: Редактирование профилей пользователей, настройка ролей (админ, модератор, автор, пользователь).
+- **Управление комментариями**: Модерация пользовательских комментариев.
+- **Категории и теги**: Управление категориями и тегами для новостей.
+- **Аналитика**: Просмотр статистики просмотров по постам.
 
-- Configure the top-level `parserOptions` property like this:
+## Технологический стек
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Проект разработан с использованием следующих технологий:
+
+- **Фреймворк:** [Vite](https://vitejs.dev/) — высокопроизводительный сборщик для фронтенда.
+- **Язык:** [TypeScript](https://www.typescriptlang.org/) для статической типизации.
+- **Библиотеки:**
+  - [React](https://reactjs.org/) — для рендеринга пользовательского интерфейса.
+  - [Redux Toolkit](https://redux-toolkit.js.org/) — для управления состоянием приложения.
+  - [Axios](https://axios-http.com/) — для работы с API-запросами.
+  - [Sass](https://sass-lang.com/) — для стилизации компонентов.
+  - [Quill](https://quilljs.com/) — WYSIWYG редактор для редактирования текстов.
+
+## Установка и запуск
+
+Для того чтобы запустить проект локально, выполните следующие шаги:
+
+1.  **Клонируйте репозиторий:**
+
+```bash
+git clone https://github.com/spammm/techpulseadmin.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2.  **Перейдите в директорию проекта:**
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+cd techpulseadmin
 ```
+
+2.  **Установите зависимости:**
+
+```bash
+npm install
+```
+
+3.  **Создайте `.env` файл на основе примера:**
+
+```bash
+cp .env.example .env
+```
+
+4.  **Запустите проект в режиме разработки:**
+
+```bash
+npm run dev
+```
+
+Откройте [http://localhost:5173](http://localhost:5173) в вашем браузере для работы с админкой.
+
+## Скрипты
+
+- `dev`: Запускает приложение в режиме разработки.
+- `build`: Создает оптимизированную сборку для продакшн.
+- `start`: Запускает сервер в продакшн-режиме после сборки.
+- `lint`: Запускает проверку кода на ошибки и соответствие стилям.
+
+## Роли и доступы
+
+Админка поддерживает разные уровни доступов в зависимости от роли пользователя:
+
+- **Администратор**: Полный доступ ко всем функциям, включая управление пользователями, постами и комментариями. Может создавать и редактировать пользователей с любой ролью.
+- **Менеджер(модератор)**: Может управлять постами и комментариями, но не имеет полного доступа к управлению пользователями. Может создавать/редактировать и блокировать писателей и клиентов.
+- **Автор(писатель)**: Может создавать и редактировать только посты и свой профиль.
+- **Клиент**: Имеет доступ только к созданию к чтению комментариев и комментированию постов на клиентском сайте, не имеет доступа в админку.
+
+## Контрибьюция
+
+Если вы хотите внести изменения или улучшения в проект, пожалуйста, создайте форк репозитория и отправьте пул-реквест с вашими предложениями.
