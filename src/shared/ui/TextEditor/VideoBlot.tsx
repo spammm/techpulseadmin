@@ -15,6 +15,7 @@ class VideoBlot extends BlockEmbed {
     iframe.setAttribute('allowfullscreen', 'true');
     iframe.setAttribute('width', '100%');
     iframe.setAttribute('height', '450');
+    iframe.setAttribute('title', 'Видео на ТехПульс');
 
     node.appendChild(iframe);
     return node;
