@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .checkboxContainer {
   display: flex;
   align-items: center;
@@ -9,7 +11,7 @@
   appearance: none;
   width: 20px;
   height: 20px;
-  border: 2px solid #ccc;
+  border: 2px solid $color-lightgray;
   border-radius: 3px;
   outline: none;
   transition: background-color 0.3s, border-color 0.3s;
@@ -22,7 +24,7 @@
     top: 0;
     width: 10px;
     height: 10px;
-    border: solid white;
+    border: solid $color-white;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
     opacity: 0;
@@ -30,19 +32,19 @@
   }
 
   &:checked {
-    background-color: #4caf50;
-    border-color: #4caf50;
+    background-color: $color-green;
+    border-color: $color-green;
     &::after {
       opacity: 1;
     }
   }
 
   &:disabled {
-    background-color: #f0f0f0;
-    border-color: #bbb;
+    background-color: $color-lightgray;
+    border-color: $color-gray;
     cursor: not-allowed;
     &::after {
-      border-color: black;
+      border-color: $color-black;
     }
   }
 }
@@ -51,7 +53,7 @@
   margin-left: 8px;
   cursor: pointer;
   &.disabledLabel {
-    color: #999;
+    color: $color-darkgray;
     cursor: not-allowed;
     opacity: 0.6;
   }

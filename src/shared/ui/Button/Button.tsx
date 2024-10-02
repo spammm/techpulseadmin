@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import styles from './Button.module.css';
+import styles from './Button.module.scss';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   text?: string;
@@ -22,7 +22,7 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled || loading}
       {...props}
     >
-      {loading ? 'Загрузка...' : text || children}{' '}
+      {loading ? 'Загрузка...' : text || children}
     </button>
   );
 };

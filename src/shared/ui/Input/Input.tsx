@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import clsx from 'clsx';
 
-import styles from './Input.module.css';
+import styles from './Input.module.scss';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
@@ -38,10 +38,13 @@ export const Input: React.FC<InputProps> = ({
         })}
         aria-required={required}
         aria-invalid={!!errorMessage}
+        aria-describedby={errorMessage ? `${inputId}-error` : undefined}
         {...props}
       />
       {errorMessage && (
-        <span className={styles.errorMessage}>{errorMessage}</span>
+        <span id={`${inputId}-error`} className={styles.errorMessage}>
+          {errorMessage}
+        </span>
       )}
     </div>
   );

@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .inputContainer {
   margin-bottom: 16px;
   position: relative;
@@ -10,7 +12,7 @@
 }
 
 .label .required {
-  color: red;
+  color: $color-red;
   margin-left: 4px;
   font-size: 14px;
 }
@@ -18,26 +20,26 @@
 .input {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid $color-lightgray;
   border-radius: 4px;
   font-size: 16px;
 }
 
 .input:focus {
-  border-color: #007bff;
+  border-color: $color-blue;
   outline: none;
 }
 
 .hasError .input {
-  border-color: red;
+  border-color: $color-red;
 }
 
 .errorInput {
-  border-color: red;
+  border-color: $color-red;
 }
 
 .errorMessage {
-  color: red;
+  color: $color-red;
   font-size: 14px;
   margin-top: 4px;
   position: absolute;

@@ -1,9 +1,12 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { Button, ButtonProps } from './Button';
 
-export default {
+const meta: Meta<ButtonProps> = {
   title: 'Shared/UI/Button',
   component: Button,
+  parameters: {
+    layout: 'centered',
+  },
   tags: ['autodocs'],
   argTypes: {
     onClick: { action: 'clicked' },
@@ -11,7 +14,9 @@ export default {
     disabled: { control: 'boolean' },
     text: { control: 'text' },
   },
-} as Meta;
+};
+
+export default meta;
 
 const Template: StoryFn<ButtonProps> = (args) => <Button {...args} />;
 
@@ -34,5 +39,5 @@ Disabled.args = {
 
 export const WithChildren = Template.bind({});
 WithChildren.args = {
-  children: <a href="#">Кнопка с дочерними элементами</a>,
+  children: 'Кнопка с дочерними элементами',
 };
