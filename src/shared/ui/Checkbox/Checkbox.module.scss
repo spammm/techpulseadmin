@@ -1,0 +1,58 @@
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.checkboxInput {
+  cursor: pointer;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  &:checked {
+    background-color: #4caf50;
+    border-color: #4caf50;
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &:disabled {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+    cursor: not-allowed;
+    &::after {
+      border-color: black;
+    }
+  }
+}
+
+.checkboxLabel {
+  margin-left: 8px;
+  cursor: pointer;
+  &.disabledLabel {
+    color: #999;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
