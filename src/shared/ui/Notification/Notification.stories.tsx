@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { within, expect } from '@storybook/test';
+import { within, expect, fn } from '@storybook/test';
 import { useState } from 'react';
 import { Notification } from './Notification';
 
@@ -17,7 +17,7 @@ export const Success: Story = {
   args: {
     message: 'Успешно выполнено!',
     type: 'success',
-    onClose: () => console.log('Закрыто'),
+    onClose: () => fn(),
   },
 };
 
@@ -25,7 +25,7 @@ export const Error: Story = {
   args: {
     message: 'Произошла ошибка!',
     type: 'error',
-    onClose: () => console.log('Закрыто'),
+    onClose: () => fn(),
   },
 };
 

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ContactForm } from './ContactForm';
-import { within, userEvent, waitFor, expect } from '@storybook/test';
+import { within, userEvent, waitFor, expect, fn } from '@storybook/test';
 
 const meta: Meta<typeof ContactForm> = {
   title: 'Shared/UI/ContactForm',
@@ -21,14 +21,14 @@ export const Default: Story = {
       { name: 'Контакт 1', value: 'Значение 1' },
       { name: 'Контакт 2', value: 'Значение 2' },
     ],
-    onContactsChange: (contacts) => console.log(contacts),
+    onContactsChange: fn(),
   },
 };
 
 export const Interactive: Story = {
   args: {
     initialContacts: [],
-    onContactsChange: (contacts) => console.log(contacts),
+    onContactsChange: fn(),
   },
 };
 

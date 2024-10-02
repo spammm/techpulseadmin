@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -7,7 +9,7 @@
 
 .pageButton {
   padding: 8px 16px;
-  background-color: #f0f0f0;
+  background-color: $color-lightgray;
   border: none;
   cursor: pointer;
   border-radius: 4px;
@@ -15,23 +17,23 @@
 }
 
 .pageButton:hover {
-  background-color: #007bff;
-  color: white;
+  background-color: $color-blue;
+  color: $color-white;
 }
 
 .pageButton:disabled {
-  background-color: #ddd;
+  background-color: $color-gray;
   cursor: not-allowed;
 }
 
 .active {
-  background-color: #007bff;
-  color: white;
+  background-color: $color-blue;
+  color: $color-white;
   cursor: not-allowed;
 }
 
 .ellipsis {
   padding: 8px;
   font-size: 18px;
-  color: #888;
+  color: $color-darkgray;
 }

@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { ImageSelector } from './ImageSelector';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, fn, userEvent, within } from '@storybook/test';
 
 const apiServer = `http://${window.location.host}`;
 
@@ -46,10 +46,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => (
     <Provider store={store}>
-      <ImageSelector
-        onSelectImage={(image) => console.log('Selected Image:', image)}
-        apiServer={apiServer}
-      />
+      <ImageSelector onSelectImage={fn()} apiServer={apiServer} />
     </Provider>
   ),
 };
@@ -58,7 +55,7 @@ export const WithDefaultImage: Story = {
   render: () => (
     <Provider store={store}>
       <ImageSelector
-        onSelectImage={(image) => console.log('Selected Image:', image)}
+        onSelectImage={fn()}
         defaultImageId={2}
         apiServer={apiServer}
       />
@@ -70,10 +67,7 @@ export const WithDefaultImage: Story = {
 export const Interactive: Story = {
   render: () => (
     <Provider store={store}>
-      <ImageSelector
-        onSelectImage={(image) => console.log('Selected Image:', image)}
-        apiServer={apiServer}
-      />
+      <ImageSelector onSelectImage={fn()} apiServer={apiServer} />
     </Provider>
   ),
 };
