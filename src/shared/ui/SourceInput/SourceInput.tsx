@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import styles from './SourceInput.module.css';
+import styles from './SourceInput.module.scss';
 
 type Source = {
   name: string;
