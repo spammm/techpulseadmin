@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import styles from './Checkbox.module.css';
 
-interface CheckboxProps
+export interface CheckboxProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   id?: string;
   label: string;
