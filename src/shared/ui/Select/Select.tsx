@@ -1,14 +1,14 @@
 import { useId } from 'react';
 import clsx from 'clsx';
 
-import styles from './Select.module.css';
+import styles from './Select.module.scss';
 
 type SelectOption = {
   value: string;
   label: string;
 };
 
-type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
+export type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
   label?: string;
   options: SelectOption[];
   errorMessage?: string;
