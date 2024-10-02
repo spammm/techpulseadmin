@@ -4,16 +4,16 @@ import { useAppSelector } from '../../../app/appStore';
 
 import styles from './ImageSelector.module.scss';
 
-interface ImageSelectorProps {
+export interface ImageSelectorProps {
   onSelectImage: (image: IPostImage) => void;
   defaultImageId?: number;
+  apiServer?: string;
 }
-
-const API_SERVER = import.meta.env.VITE_API_SERVER;
 
 export const ImageSelector: React.FC<ImageSelectorProps> = ({
   onSelectImage,
   defaultImageId,
+  apiServer = import.meta.env.VITE_API_SERVER,
 }) => {
   const images = useAppSelector((state) => state.images.images);
   const [selectedImage, setSelectedImage] = useState<IPostImage | null>(null);
@@ -40,7 +40,7 @@ export const ImageSelector: React.FC<ImageSelectorProps> = ({
             <div
               className={styles.preview}
               style={{
-                backgroundImage: `url(${API_SERVER}${selectedImage.smallSrc})`,
+                backgroundImage: `url(${apiServer}${selectedImage.smallSrc})`,
               }}
             />
             <span>{selectedImage.alt}</span>
@@ -60,7 +60,7 @@ export const ImageSelector: React.FC<ImageSelectorProps> = ({
               <div
                 className={styles.preview}
                 style={{
-                  backgroundImage: `url(${`${API_SERVER}${image.smallSrc}`})`,
+                  backgroundImage: `url(${`${apiServer}${image.smallSrc}`})`,
                 }}
               />
               <span>{image.alt}</span>
