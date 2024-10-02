@@ -1,20 +1,22 @@
+@import '../../styles/variables';
+
 .notification {
   position: fixed;
   top: 20px;
   right: 20px;
   padding: 1rem;
   border-radius: 8px;
-  color: white;
+  color: $color-white;
   z-index: 1000;
   animation: fade-in 0.5s ease-out;
 }
 
 .notification.success {
-  background-color: #4caf50;
+  background-color: $color-darkgreen;
 }
 
 .notification.error {
-  background-color: #f44336;
+  background-color: $color-red;
 }
 
 @keyframes fade-in {
