@@ -63,14 +63,17 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             placeholder="Введите значение контакта"
             required
           />
-          <Button
-            text="Удалить"
-            type="button"
-            onClick={() => handleRemoveContact(index)}
-            className={styles.deleteButton}
-          />
+          <div className={styles.deleteButtonContainer}>
+            <Button
+              text="Удалить"
+              type="button"
+              onClick={() => handleRemoveContact(index)}
+              className={styles.deleteButton}
+            />
+          </div>
         </div>
       ))}
+
       <Button
         text="Добавить контакт"
         type="button"

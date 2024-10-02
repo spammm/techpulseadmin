@@ -35,39 +35,6 @@
   color: #777777;
 }
 
-.contacts {
-  margin-top: 20px;
-}
-
-.contacts h3 {
-  color: #333333;
-  margin-bottom: 10px;
-}
-
-.contactRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.contactRow input {
-  flex: 1;
-}
-
-.contactRow button {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.contactRow button:hover {
-  background-color: #c0392b;
-}
-
 .profileActions {
   display: flex;
   justify-content: space-between;
