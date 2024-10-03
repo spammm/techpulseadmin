@@ -1,4 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { FcApproval } from 'react-icons/fc';
 import { Button, ButtonProps } from './Button';
 
 const meta: Meta<ButtonProps> = {
@@ -37,7 +38,15 @@ Disabled.args = {
   disabled: true,
 };
 
-export const WithChildren = Template.bind({});
-WithChildren.args = {
-  children: 'Кнопка с дочерними элементами',
+export const IconButton = Template.bind({});
+IconButton.args = {
+  children: <FcApproval />,
+  variant: 'icon',
+  title: 'Icon Button',
+};
+
+export const IconButtonDisabled = Template.bind({});
+IconButtonDisabled.args = {
+  ...IconButton.args,
+  disabled: true,
 };
