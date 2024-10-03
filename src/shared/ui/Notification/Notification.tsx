@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import { FaTimes } from 'react-icons/fa';
+import { Button } from '..';
 
 import styles from './Notification.module.scss';
 
@@ -26,13 +28,14 @@ export const Notification: React.FC<NotificationProps> = ({
     <div className={`${styles.notification} ${styles[type]}`}>
       {message}
       {onClose && (
-        <button
+        <Button
           onClick={onClose}
+          variant="icon"
           className={styles.closeButton}
           title="Закрыть"
         >
-          Закрыть
-        </button>
+          <FaTimes />
+        </Button>
       )}
     </div>
   );
