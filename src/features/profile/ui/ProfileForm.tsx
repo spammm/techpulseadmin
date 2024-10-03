@@ -151,6 +151,7 @@ export const ProfileForm: React.FC = () => {
         placeholder="Расскажите о себе"
       />
 
+      <h2>Ваши контактные данные</h2>
       <ContactForm
         initialContacts={profile.contacts || []}
         onContactsChange={handleContactsChange}

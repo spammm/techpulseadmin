@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Input, Button } from '../../../shared/ui';
+import { MdDelete } from 'react-icons/md';
 
 import styles from './ContactForm.module.scss';
 
@@ -47,7 +48,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         <div key={index} className={styles.contactFormGroup}>
           <Input
             label="Имя контакта"
-            name={`contact-name-${index}`}
             value={contact.name}
             onChange={(e) => handleContactChange(index, 'name', e.target.value)}
             placeholder="Введите имя контакта"
@@ -55,7 +55,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({
           />
           <Input
             label="Значение контакта"
-            name={`contact-value-${index}`}
             value={contact.value}
             onChange={(e) =>
               handleContactChange(index, 'value', e.target.value)
@@ -63,17 +62,16 @@ export const ContactForm: React.FC<ContactFormProps> = ({
             placeholder="Введите значение контакта"
             required
           />
-          <div className={styles.deleteButtonContainer}>
-            <Button
-              text="Удалить"
-              type="button"
-              onClick={() => handleRemoveContact(index)}
-              className={styles.deleteButton}
-            />
-          </div>
+          <Button
+            type="button"
+            onClick={() => handleRemoveContact(index)}
+            className={styles.deleteButton}
+            aria-label="Удалить контакт"
+          >
+            <MdDelete />
+          </Button>
         </div>
       ))}
-
       <Button
         text="Добавить контакт"
         type="button"
