@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .textareaContainer {
   margin-bottom: 16px;
   position: relative;
@@ -12,7 +14,8 @@
 .textarea {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border: 1px solid $color-lightgray;
   border-radius: 4px;
   font-size: 16px;
   min-height: 100px;
@@ -20,21 +23,21 @@
 }
 
 .textarea:focus {
-  border-color: #007bff;
+  border-color: $color-blue;
   outline: none;
 }
 
 .textarea:disabled {
-  background-color: #f5f5f5;
+  background-color: $color-lightgray;
   cursor: not-allowed;
 }
 
 .error {
-  border-color: red;
+  border-color: $color-red;
 }
 
 .errorMessage {
-  color: red;
+  color: $color-red;
   font-size: 14px;
   margin-top: 4px;
   position: absolute;

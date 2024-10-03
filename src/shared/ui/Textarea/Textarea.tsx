@@ -1,7 +1,7 @@
 import { useId } from 'react';
 import clsx from 'clsx';
 
-import styles from './Textarea.module.css';
+import styles from './Textarea.module.scss';
 
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   label?: string;

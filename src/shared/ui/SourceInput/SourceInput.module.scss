@@ -46,9 +46,12 @@
 
 .addButton {
   padding: 8px 16px;
-  background-color: $color-green;
+  background-color: $color-darkgreen;
   color: $color-white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  &:hover {
+    background-color: $color-green;
+  }
 }
