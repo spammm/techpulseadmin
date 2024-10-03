@@ -7,15 +7,33 @@ const meta: Meta<SelectProps> = {
   component: Select,
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component:
+          'Компонент Select позволяет пользователям выбирать одно значение из предоставленного списка. Он может отображать ошибку, если поле обязательно для заполнения.',
+      },
+    },
   },
   tags: ['autodocs'],
   argTypes: {
     options: {
       control: { type: 'object' },
+      description:
+        'Массив объектов, представляющих варианты выбора. Каждый объект должен содержать значения `value` и `label`.',
     },
-    errorMessage: { control: 'text' },
-    label: { control: 'text' },
-    disabled: { control: 'boolean' },
+    errorMessage: {
+      control: 'text',
+      description:
+        'Сообщение об ошибке, отображаемое под селектом, если есть ошибка.',
+    },
+    label: {
+      control: 'text',
+      description: 'Метка для селекта.',
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Если true, селект будет отключен.',
+    },
   },
 } satisfies Meta<SelectProps>;
 

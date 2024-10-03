@@ -6,6 +6,25 @@ const meta: Meta<typeof Textarea> = {
   title: 'Shared/UI/Textarea',
   component: Textarea,
   tags: ['autodocs'],
+  argTypes: {
+    label: {
+      control: 'text',
+      description: 'Метка, описывающая текстовое поле.',
+    },
+    placeholder: {
+      control: 'text',
+      description: 'Текст-подсказка, отображаемый в пустом текстовом поле.',
+    },
+    errorMessage: {
+      control: 'text',
+      description:
+        'Сообщение об ошибке, отображаемое, когда поле не заполнено.',
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Указывает, является ли текстовое поле недоступным.',
+    },
+  },
 } satisfies Meta<typeof Textarea>;
 
 export default meta;

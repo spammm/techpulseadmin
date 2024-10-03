@@ -7,15 +7,44 @@ const meta: Meta<ButtonProps> = {
   component: Button,
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component:
+          'Компонент Button представляет собой кнопку. Поддерживает различные состояния, такие как Loading и Disabled.',
+      },
+    },
   },
   tags: ['autodocs'],
   argTypes: {
-    onClick: { action: 'clicked' },
-    loading: { control: 'boolean' },
-    disabled: { control: 'boolean' },
-    text: { control: 'text' },
+    onClick: {
+      action: 'clicked',
+      description: 'Колбек вызываемый при клике на кнопку.',
+    },
+    loading: {
+      control: 'boolean',
+      description:
+        'Состояние загрузки. Если true, отображается индикатор загрузки вместо текста кнопки и блокирует кнопку.',
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Если true, кнопка будет заблокирована',
+    },
+    text: {
+      control: 'text',
+      description: 'Текст, отображаемый на кнопке.',
+    },
+    children: {
+      description:
+        'Дочерние элементы, отображаемые в кнопке (например, иконки).',
+    },
+    variant: {
+      control: { type: 'select' },
+      options: ['primary', 'icon'],
+      description:
+        'Вариант отображения кнопки. Можно выбрать между "primary" (основной) и "icon" (кнопка с иконкой). Иконка передается через children, например можно использовать react-icons',
+    },
   },
-};
+} satisfies Meta<ButtonProps>;
 
 export default meta;
 

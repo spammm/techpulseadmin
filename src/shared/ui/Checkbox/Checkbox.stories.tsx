@@ -10,10 +10,23 @@ const meta: Meta<CheckboxProps> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    checked: { control: 'boolean' },
-    disabled: { control: 'boolean' },
-    label: { control: 'text' },
-    onChange: { action: 'changed' },
+    checked: {
+      control: 'boolean',
+      description: 'Определяет, является ли чекбокс отмеченным.',
+    },
+    disabled: {
+      control: 'boolean',
+      description:
+        'Если true, чекбокс будет отключен и не сможет быть отмечен или снят.',
+    },
+    label: {
+      control: 'text',
+      description: 'Текст, отображаемый рядом с чекбоксом.',
+    },
+    onChange: {
+      action: 'changed',
+      description: 'Функция, вызываемая при изменении состояния чекбокса.',
+    },
   },
   args: {
     onChange: fn(),

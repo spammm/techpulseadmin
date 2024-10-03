@@ -7,6 +7,31 @@ const meta: Meta<typeof Notification> = {
   title: 'Shared/UI/Notification',
   component: Notification,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Компонент Нотификацит отображает сообщение пользователю. Уведомления могут быть двух типов: успешные и ошибочные. ' +
+          'Уведомление автоматически исчезает через 3 секунды или может быть закрыто вручную с помощью кнопки закрытия.',
+      },
+    },
+  },
+  argTypes: {
+    message: {
+      control: 'text',
+      description: 'Сообщение, отображаемое в уведомлении.',
+    },
+    type: {
+      control: { type: 'select', options: ['success', 'error'] },
+      description:
+        'Тип уведомления, который определяет его стиль: "success" для успешных сообщений и "error" для сообщений об ошибках.',
+    },
+    onClose: {
+      action: 'closed',
+      description:
+        'Функция, вызываемая при закрытии уведомления. Если не предоставлена, уведомление не будет закрываться автоматически.',
+    },
+  },
 } satisfies Meta<typeof Notification>;
 
 export default meta;

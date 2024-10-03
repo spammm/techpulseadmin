@@ -10,9 +10,19 @@ const meta: Meta<typeof Input> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    errorMessage: { control: 'text' },
-    label: { control: 'text' },
-    required: { control: 'boolean' },
+    errorMessage: {
+      control: 'text',
+      description:
+        'Сообщение об ошибке, которое будет отображаться под полем ввода, если оно не проходит валидацию.',
+    },
+    label: {
+      control: 'text',
+      description: 'Метка для поля ввода, отображаемая над ним.',
+    },
+    required: {
+      control: 'boolean',
+      description: 'Указывает, является ли поле обязательным для заполнения.',
+    },
   },
 } satisfies Meta<typeof Input>;
 

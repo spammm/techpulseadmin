@@ -9,6 +9,18 @@ const meta: Meta<typeof ContactForm> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  argTypes: {
+    initialContacts: {
+      control: 'object',
+      description:
+        'Начальный список контактов для отображения в форме. Каждый контакт должен быть объектом с полями name и value.',
+    },
+    onContactsChange: {
+      action: 'changed',
+      description:
+        'Функция, вызываемая при изменении списка контактов. Принимает массив объектов контактов.',
+    },
+  },
 } satisfies Meta<typeof ContactForm>;
 
 export default meta;

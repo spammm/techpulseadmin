@@ -5,7 +5,31 @@ import { within, userEvent, expect, fn } from '@storybook/test';
 const meta: Meta<typeof SourceInput> = {
   title: 'Shared/UI/SourceInput',
   component: SourceInput,
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        component:
+          'Компонент SourceInput позволяет пользователю добавлять, отображать и удалять источники. ' +
+          'Каждый источник содержит название и ссылку. ' +
+          'Пользователь может добавлять новый источник, заполнив соответствующие поля и нажав кнопку "Добавить". ' +
+          'Добавленные источники отображаются под полями ввода, и их можно удалить при необходимости.',
+      },
+    },
+  },
   tags: ['autodocs'],
+  argTypes: {
+    sources: {
+      description:
+        'Массив источников, каждый из которых представляет собой объект с полями name и link.',
+      control: 'object',
+    },
+    onChange: {
+      description:
+        'Колбэк вызываемый при изменении списка источников. Принимает массив источников в качестве аргумента.',
+      action: 'changed',
+    },
+  },
 } satisfies Meta<typeof SourceInput>;
 
 export default meta;
@@ -22,7 +46,7 @@ export const Default: Story = {
 export const Interactive: Story = {
   args: {
     sources: [],
-    onChange: fn(), // Используем fn для отслеживания вызовов
+    onChange: fn(),
   },
 };
 
