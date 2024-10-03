@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test-storybook": "test-storybook --url http://localhost:6006",
+    "chromatic": "npx chromatic --project-token=chpt_e6e21fdc36bdac6"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
@@ -37,9 +39,11 @@
     "@storybook/react": "^8.3.4",
     "@storybook/react-vite": "^8.3.4",
     "@storybook/test": "^8.3.4",
+    "@storybook/test-runner": "^0.19.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "chromatic": "^11.11.0",
     "clsx": "^2.1.1",
     "eslint": "^9.9.0",
     "eslint-import-resolver-typescript": "^3.6.3",
@@ -47,6 +51,7 @@
     "eslint-plugin-react-refresh": "^0.4.9",
     "eslint-plugin-storybook": "^0.9.0",
     "globals": "^15.9.0",
+    "playwright": "^1.47.2",
     "redux-mock-store": "^1.5.4",
     "sass": "^1.79.4",
     "storybook": "^8.3.4",
