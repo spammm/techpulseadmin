@@ -1,6 +1,8 @@
 import { useState, KeyboardEvent, ChangeEvent } from 'react';
+import { MdClose } from 'react-icons/md';
+import { Button, Input } from '..';
 
-import styles from './TagInput.module.css';
+import styles from './TagInput.module.scss';
 
 type TagInputProps = {
   tags: string[];
@@ -39,23 +41,26 @@ export const TagInput: React.FC<TagInputProps> = ({
         {tags.map((tag, index) => (
           <span key={index} className={styles.tag}>
             {tag}
-            <button
+            <Button
               type="button"
+              variant="icon"
               className={styles.removeTagButton}
               onClick={() => handleRemoveTag(tag)}
+              aria-label={`Удалить тег ${tag}`}
             >
-              &times;
-            </button>
+              <MdClose />
+            </Button>
           </span>
         ))}
       </div>
-      <input
+      <Input
         type="text"
         value={inputValue}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         className={styles.tagInput}
+        aria-label="Поле для добавления тега"
       />
     </div>
   );
