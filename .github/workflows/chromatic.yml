@@ -1,25 +1,23 @@
-name: Chromatic
+name: Chromatic Tests
 
 on:
   push:
-    branches: [main]
-  pull_request:
+    branches:
+      - main
 
 jobs:
-  chromatic:
-    name: Run Chromatic
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          fetch-depth: 0
 
       - name: Install dependencies
         run: npm install
 
       - name: Run Chromatic
-        run: npx chromatic --project-token=chpt_e6e21fdc36bdac6
+        run: npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
