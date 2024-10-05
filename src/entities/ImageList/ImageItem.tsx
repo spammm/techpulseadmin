@@ -4,16 +4,16 @@ import { Input, Button } from '../../shared/ui';
 
 import styles from './ImageItem.module.scss';
 
-const API_SERVER = import.meta.env.VITE_API_SERVER;
-
 interface ImageItemProps {
   image: IPostImage;
   onUpdateImage: (imageId: number, updatedData: Partial<IPostImage>) => void;
+  apiServer?: string;
 }
 
 export const ImageItem: React.FC<ImageItemProps> = ({
   image,
   onUpdateImage,
+  apiServer = import.meta.env.VITE_API_SERVER,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedImage, setEditedImage] = useState<IPostImage>(image);
@@ -30,14 +30,14 @@ export const ImageItem: React.FC<ImageItemProps> = ({
   return (
     <div className={styles.listItem}>
       <img
-        src={`${API_SERVER}${editedImage.src}`}
+        src={`${apiServer}${editedImage.src}`}
         alt={editedImage.alt}
         className={styles.preview}
       />
       <div className={styles.fields}>
         <Input
           label="URL:"
-          defaultValue={`${API_SERVER}${editedImage.src}`}
+          defaultValue={`${apiServer}${editedImage.src}`}
           readOnly
           className={styles.input}
         />
