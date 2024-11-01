@@ -11,6 +11,7 @@ import { NewPostPage } from '../../pages/newPost';
 import { PostsPage } from '../../pages/posts';
 import { ProfilePage } from '../../pages/profile';
 import { UserListPage } from '../../pages/users';
+import { SettingsPage } from '../../pages/settings';
 
 export const AppRouter: React.FC = () => {
   return (
@@ -38,6 +39,7 @@ export const AppRouter: React.FC = () => {
               element={<PrivateRoute allowedRoles={['admin', 'manager']} />}
             >
               <Route path="/comments" element={<CommentsPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
               <Route path="/users" element={<UserListPage />} />
               <Route path="/users/:id" element={<EditUserPage />} />
             </Route>

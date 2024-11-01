@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './SourceInput.module.scss';
+import { useAppDispatch, useAppSelector } from '../../model';
+import { fetchSourcesThunk } from '../../model/store/sourcesSlice';
 
 type Source = {
   name: string;
@@ -11,12 +13,6 @@ type SourceInputProps = {
   onChange: (sources: Source[]) => void;
 };
 
-const predefinedSources: Source[] = [
-  { name: 'BBC News', link: 'https://www.bbc.com/news' },
-  { name: 'CNN', link: 'https://www.cnn.com' },
-  { name: 'The New York Times', link: 'https://www.nytimes.com' },
-];
-
 export const SourceInput: React.FC<SourceInputProps> = ({
   sources,
   onChange,
@@ -25,6 +21,18 @@ export const SourceInput: React.FC<SourceInputProps> = ({
   const [link, setLink] = useState('');
   const [suggestions, setSuggestions] = useState<Source[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const dispatch = useAppDispatch();
+  const {
+    sources: predefinedSources,
+    loading,
+    loaded,
+  } = useAppSelector((state) => state.sources);
+
+  useEffect(() => {
+    if (!loaded && !loading) {
+      dispatch(fetchSourcesThunk());
+    }
+  }, [dispatch, loaded, loading]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputName = e.target.value;

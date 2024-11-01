@@ -1,4 +1,3 @@
-import React from 'react';
 import { ProfileForm } from '../../features/profile';
 import styles from './ProfilePage.module.scss';
 

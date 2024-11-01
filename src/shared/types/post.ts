@@ -1,4 +1,5 @@
 import { IImage, IPostImage } from './image';
+import { ISources } from './sources';
 import { IUser } from './user';
 
 export interface IPost {
@@ -15,7 +16,7 @@ export interface IPost {
   createdAt: string;
   updatedAt: string;
   publishedAt?: string;
-  sources: { name: string; link: string }[];
+  sources: ISources[];
   authorName?: string;
   showAuthorName: boolean;
   viewCount: number;
