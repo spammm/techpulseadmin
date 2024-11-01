@@ -27,6 +27,16 @@ export const ImageItem: React.FC<ImageItemProps> = ({
     setIsEditing(false);
   };
 
+  const presetDALLE: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    setEditedImage({
+      ...editedImage,
+      sourceUrl: 'https://openai.com/index/dall-e-3/',
+      source: 'Изображение сгенерировано нейросетью DALL•Е 3',
+    });
+    setIsEditing(true);
+  };
+
   return (
     <div className={styles.listItem}>
       <img
@@ -34,6 +44,7 @@ export const ImageItem: React.FC<ImageItemProps> = ({
         alt={editedImage.alt}
         className={styles.preview}
       />
+
       <div className={styles.fields}>
         <Input
           label="URL:"
@@ -62,6 +73,9 @@ export const ImageItem: React.FC<ImageItemProps> = ({
         />
         <input type="hidden" name="width" defaultValue={editedImage?.width} />
         <input type="hidden" name="height" defaultValue={editedImage?.height} />
+        <Button onClick={presetDALLE} className={styles.dallePreserButton}>
+          DALL•E 3
+        </Button>
         {isEditing && (
           <Button
             className={styles.saveButton}
