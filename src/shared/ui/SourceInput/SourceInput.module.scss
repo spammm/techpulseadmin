@@ -55,3 +55,31 @@
     background-color: $color-green;
   }
 }
+
+.sourceForm {
+  position: relative;
+}
+
+.suggestionsList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 2px;
+  z-index: 1000;
+  list-style: none;
+  padding: 0;
+}
+
+.suggestionItem {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.suggestionItem:hover {
+  background-color: #f0f0f0;
+}

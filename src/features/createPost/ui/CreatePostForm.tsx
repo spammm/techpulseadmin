@@ -113,6 +113,8 @@ export const CreatePostForm: React.FC = () => {
           onChange={(e) => setKeywords(e.target.value)}
         />
         <TextEditor onChange={setContent} />
+        <br />
+
         <small>
           Обязательно добавить теги (если подходят): "разработки", "гаджеты",
           "технологии", "будущее", "аналитика", "прогнозы", "интервью", "лидеры"

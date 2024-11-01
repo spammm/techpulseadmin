@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import styles from './SourceInput.module.scss';
 
 type Source = {
@@ -12,12 +11,44 @@ type SourceInputProps = {
   onChange: (sources: Source[]) => void;
 };
 
+const predefinedSources: Source[] = [
+  { name: 'BBC News', link: 'https://www.bbc.com/news' },
+  { name: 'CNN', link: 'https://www.cnn.com' },
+  { name: 'The New York Times', link: 'https://www.nytimes.com' },
+];
+
 export const SourceInput: React.FC<SourceInputProps> = ({
   sources,
   onChange,
 }) => {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
+  const [suggestions, setSuggestions] = useState<Source[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputName = e.target.value;
+    setName(inputName);
+
+    if (inputName.trim()) {
+      const filteredSuggestions = predefinedSources.filter((source) =>
+        source.name.toLowerCase().includes(inputName.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+      setShowSuggestions(true);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      setLink('');
+    }
+  };
+
+  const handleSuggestionClick = (suggestion: Source) => {
+    setName(suggestion.name);
+    setLink(suggestion.link);
+    setSuggestions([]);
+    setShowSuggestions(false);
+  };
 
   const handleAddSource = () => {
     if (name.trim() && link.trim()) {
@@ -54,10 +85,31 @@ export const SourceInput: React.FC<SourceInputProps> = ({
         <input
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleNameChange}
           placeholder="Название источника"
           className={styles.input}
+          onFocus={() => {
+            if (suggestions.length > 0) {
+              setShowSuggestions(true);
+            }
+          }}
+          onBlur={() => {
+            setTimeout(() => setShowSuggestions(false), 100);
+          }}
         />
+        {showSuggestions && suggestions.length > 0 && (
+          <ul className={styles.suggestionsList}>
+            {suggestions.map((suggestion, index) => (
+              <li
+                key={index}
+                className={styles.suggestionItem}
+                onMouseDown={() => handleSuggestionClick(suggestion)}
+              >
+                {suggestion.name}
+              </li>
+            ))}
+          </ul>
+        )}
         <input
           type="text"
           value={link}
