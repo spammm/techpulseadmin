@@ -30,4 +30,6 @@ dist-ssr
 
 *.tsbuildinfo
 
+# storybook
 *storybook.log
+storybook-static
