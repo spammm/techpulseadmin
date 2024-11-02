@@ -61,7 +61,7 @@ export const Interactive: Story = {
 Interactive.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const input = canvas.getByLabelText('Поле для добавления тега');
-  const initialTag = 'Test Tag';
+  const initialTag = 'TestTag';
 
   expect(input, 'поле ввода отображается').toBeInTheDocument();
 
