@@ -50,7 +50,7 @@ export const WithTags: Story = {
   },
 };
 
-const firstTag = 'Default tag';
+const firstTag = 'DefaultTag';
 export const Interactive: Story = {
   args: {
     tags: [firstTag],
