@@ -20,8 +20,15 @@ export const TagInput: React.FC<TagInputProps> = ({
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && inputValue.trim()) {
       event.preventDefault();
-      if (!tags.includes(inputValue.trim())) {
-        onChange([...tags, inputValue.trim()]);
+      const cleanedValue = inputValue.replace(/[\s_-]/g, '');
+      const newTags = cleanedValue
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter((tag) => tag);
+      const uniqueTags = newTags.filter((tag) => !tags.includes(tag));
+
+      if (uniqueTags.length > 0) {
+        onChange([...tags, ...uniqueTags]);
         setInputValue('');
       }
     }
