@@ -3,8 +3,6 @@ import { ImageItem } from './ImageItem';
 import { IPostImage } from '../../shared/types/image';
 import { expect, fn, userEvent, within } from '@storybook/test';
 
-const apiServer = `http://${window.location.host}`;
-
 const mockImage: IPostImage = {
   id: 1,
   alt: 'Пример изображения',
@@ -35,10 +33,6 @@ const meta: Meta<typeof ImageItem> = {
       action: 'updated',
       description: 'Функция, вызываемая для обновления данных изображения.',
     },
-    apiServer: {
-      control: 'text',
-      description: 'Базовый URL API сервера для получения изображений.',
-    },
   },
 } satisfies Meta<typeof ImageItem>;
 
@@ -50,7 +44,6 @@ export const Default: Story = {
   args: {
     image: mockImage,
     onUpdateImage: fn(),
-    apiServer,
   },
 };
 

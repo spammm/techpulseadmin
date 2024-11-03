@@ -5,8 +5,6 @@ import { ImageSelector } from '../ImageSelector';
 
 import styles from './ImageModal.module.scss';
 
-const API_SERVER = import.meta.env.VITE_API_SERVER;
-
 interface ModalProps {
   onClose: () => void;
   onSubmit: (data: {
@@ -27,7 +25,7 @@ export const ImageModal: React.FC<ModalProps> = ({ onClose, onSubmit }) => {
     e.stopPropagation();
     if (selectedImage) {
       onSubmit({
-        src: `${API_SERVER}${selectedImage.src}`,
+        src: `${selectedImage.src}`,
         alt: selectedImage.alt,
         sourceUrl: selectedImage.sourceUrl || '',
         sourceName: selectedImage.source || '',

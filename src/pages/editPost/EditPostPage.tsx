@@ -8,8 +8,6 @@ import {
 
 import styles from './EditPostPage.module.scss';
 
-const API_SERVER = import.meta.env.VITE_API_SERVER;
-
 export const EditPostPage: React.FC = () => {
   const { url } = useParams<{ url: string }>();
   const { handleFieldChange, handleSubmit: submitPost } = useEditPost(url);
@@ -34,7 +32,7 @@ export const EditPostPage: React.FC = () => {
         handleImageSelect={(image) =>
           handleFieldChange('image', {
             ...image,
-            src: `${API_SERVER}${image.smallSrc}`,
+            src: `${image.smallSrc}`,
           })
         }
       />

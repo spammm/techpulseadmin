@@ -4,8 +4,6 @@ import configureMockStore from 'redux-mock-store';
 import { ImageSelector } from './ImageSelector';
 import { expect, fn, userEvent, within } from '@storybook/test';
 
-const apiServer = `http://${window.location.host}`;
-
 // мок-стора
 const mockStore = configureMockStore();
 const store = mockStore({
@@ -56,11 +54,6 @@ const meta: Meta<typeof ImageSelector> = {
         'ID изображения, которое будет выбрано по умолчанию, если оно присутствует в списке доступных изображений.',
       control: { type: 'number' },
     },
-    apiServer: {
-      description:
-        'Базовый URL для получения изображений. По умолчанию используется переменная окружения VITE_API_SERVER.',
-      control: { type: 'text' },
-    },
   },
 } satisfies Meta<typeof ImageSelector>;
 
@@ -71,7 +64,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => (
     <Provider store={store}>
-      <ImageSelector onSelectImage={fn()} apiServer={apiServer} />
+      <ImageSelector onSelectImage={fn()} />
     </Provider>
   ),
 };
@@ -79,11 +72,7 @@ export const Default: Story = {
 export const WithDefaultImage: Story = {
   render: () => (
     <Provider store={store}>
-      <ImageSelector
-        onSelectImage={fn()}
-        defaultImageId={2}
-        apiServer={apiServer}
-      />
+      <ImageSelector onSelectImage={fn()} defaultImageId={2} />
     </Provider>
   ),
 };
@@ -92,7 +81,7 @@ export const WithDefaultImage: Story = {
 export const Interactive: Story = {
   render: () => (
     <Provider store={store}>
-      <ImageSelector onSelectImage={fn()} apiServer={apiServer} />
+      <ImageSelector onSelectImage={fn()} />
     </Provider>
   ),
 };

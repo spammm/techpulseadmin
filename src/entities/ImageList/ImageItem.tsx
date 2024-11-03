@@ -7,13 +7,11 @@ import styles from './ImageItem.module.scss';
 interface ImageItemProps {
   image: IPostImage;
   onUpdateImage: (imageId: number, updatedData: Partial<IPostImage>) => void;
-  apiServer?: string;
 }
 
 export const ImageItem: React.FC<ImageItemProps> = ({
   image,
   onUpdateImage,
-  apiServer = import.meta.env.VITE_API_SERVER,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedImage, setEditedImage] = useState<IPostImage>(image);
@@ -40,7 +38,7 @@ export const ImageItem: React.FC<ImageItemProps> = ({
   return (
     <div className={styles.listItem}>
       <img
-        src={`${apiServer}${editedImage.src}`}
+        src={`${editedImage.src}`}
         alt={editedImage.alt}
         className={styles.preview}
       />
@@ -48,7 +46,7 @@ export const ImageItem: React.FC<ImageItemProps> = ({
       <div className={styles.fields}>
         <Input
           label="URL:"
-          defaultValue={`${apiServer}${editedImage.src}`}
+          defaultValue={`${editedImage.src}`}
           readOnly
           className={styles.input}
         />

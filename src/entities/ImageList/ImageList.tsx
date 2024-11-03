@@ -7,24 +7,15 @@ import styles from './ImageList.module.scss';
 
 interface ImageListProps {
   onUpdateImage: (imageId: number, updatedData: Partial<IPostImage>) => void;
-  apiServer?: string;
 }
 
-export const ImageList: React.FC<ImageListProps> = ({
-  onUpdateImage,
-  apiServer = import.meta.env.VITE_API_SERVER,
-}) => {
+export const ImageList: React.FC<ImageListProps> = ({ onUpdateImage }) => {
   const imageLinks = useSelector((state: RootState) => state.images.images);
 
   return (
     <div className={styles.list}>
       {imageLinks.map((image) => (
-        <ImageItem
-          key={image.id}
-          image={image}
-          onUpdateImage={onUpdateImage}
-          apiServer={apiServer}
-        />
+        <ImageItem key={image.id} image={image} onUpdateImage={onUpdateImage} />
       ))}
     </div>
   );

@@ -5,8 +5,6 @@ import { expect, fn, within, userEvent } from '@storybook/test';
 import { ImageList } from './ImageList';
 import { IPostImage } from '../../shared/types/image';
 
-const apiServer = `http://${window.location.host}`;
-
 const image1: IPostImage = {
   id: 1,
   alt: 'Пример изображения 1',
@@ -67,7 +65,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => (
     <Provider store={store}>
-      <ImageList onUpdateImage={fn()} apiServer={apiServer} />
+      <ImageList onUpdateImage={fn()} />
     </Provider>
   ),
 };
@@ -77,7 +75,7 @@ const handlerUploadImage = fn();
 export const Interactive: Story = {
   render: () => (
     <Provider store={store}>
-      <ImageList onUpdateImage={handlerUploadImage} apiServer={apiServer} />
+      <ImageList onUpdateImage={handlerUploadImage} />
     </Provider>
   ),
 };
