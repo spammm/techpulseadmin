@@ -110,8 +110,15 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
           value={activePost.content}
           onChange={(newValue) => handleFieldChange('content', newValue)}
         />
+        <Input
+          label="Шаблон для поиска похожих статей"
+          readOnly
+          defaultValue={
+            'https://yandex.ru/search/?text=[Текст] site:tehpulse.ru'
+          }
+        />
         <small>
-          Обязательно добавить теги: "разработки", "гаджеты", "технологии" и
+          Обязательно добавить теги: «разработки», «гаджеты», «технологии» и
           т.д.
         </small>
         <TagInput

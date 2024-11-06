@@ -11,7 +11,6 @@ import {
   Checkbox,
 } from '../../../shared/ui';
 import { addNewPost } from '../../../shared/model/store/postsSlice';
-
 import styles from './CreatePostForm.module.scss';
 
 export const CreatePostForm: React.FC = () => {
@@ -114,10 +113,15 @@ export const CreatePostForm: React.FC = () => {
         />
         <TextEditor onChange={setContent} />
         <br />
-
+        <Input
+          label="Шаблон для поиска похожих статей"
+          readOnly
+          defaultValue={`https://yandex.ru/search/?text=[Текст] site:tehpulse.ru`}
+        />
+        <br />
         <small>
-          Обязательно добавить теги (если подходят): "разработки", "гаджеты",
-          "технологии", "будущее", "аналитика", "прогнозы", "интервью", "лидеры"
+          Обязательно добавить теги: «разработки», «гаджеты», «технологии» и
+          т.д.
         </small>
         <TagInput tags={tags} onChange={handleTagChange} />
 
