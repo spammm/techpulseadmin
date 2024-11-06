@@ -23,10 +23,17 @@
   color: #555;
   text-align: center;
   line-height: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 figcaption span {
   color: #555;
+}
+
+figcaption p {
+  width: 100%;
+  margin: 0;
 }
 
 figcaption a {

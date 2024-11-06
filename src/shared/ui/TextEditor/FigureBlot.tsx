@@ -29,9 +29,13 @@ class FigureBlot extends BlockEmbed {
 
     if (value.sourceName && value.sourceUrl) {
       figcaption.innerHTML = `<span></span><div><a target="_blank" rel="noreferrer" href="${value.sourceUrl}">${value.sourceName}</a></div>      `;
+    } else if (value.sourceName !== '') {
+      figcaption.innerHTML = `<p>${value.alt}</p><div data-source="true">${value.sourceName}</div>`;
     } else {
-      figcaption.innerHTML = `\n <p>&nbsp;</p>${value.alt}\n <p>&nbsp;</p>`;
+      figcaption.innerHTML = `<p>${value.alt}</p>`;
     }
+
+    node.setAttribute('data-alt', value.alt);
 
     node.appendChild(img);
     node.appendChild(figcaption);
@@ -44,6 +48,7 @@ class FigureBlot extends BlockEmbed {
     const figcaption = node.querySelector('figcaption');
 
     const link = figcaption?.querySelector('a');
+    const div = figcaption?.querySelector('div');
 
     return {
       src: img?.getAttribute('src') || '',
@@ -51,7 +56,7 @@ class FigureBlot extends BlockEmbed {
       width: img?.getAttribute('width') || '',
       height: img?.getAttribute('height') || '',
       sourceUrl: link?.getAttribute('href') || '',
-      sourceName: link?.textContent || '',
+      sourceName: link?.textContent || div?.textContent || '',
     };
   }
 }
