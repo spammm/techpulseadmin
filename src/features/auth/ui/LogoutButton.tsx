@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { logoutUser } from '../../../features/auth';
+import { logoutUser } from '..';
 import { Button } from '../../../shared/ui';
 
 export const LogoutButton: React.FC = () => {

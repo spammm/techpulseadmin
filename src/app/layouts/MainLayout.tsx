@@ -1,5 +1,5 @@
 import { Link, Outlet } from 'react-router-dom';
-import { LogoutButton } from '../../entities/LogoutButton';
+import { LogoutButton } from '../../features/auth';
 import { useAppSelector } from '../appStore';
 
 import styles from './MainLayout.module.scss';
