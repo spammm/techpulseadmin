@@ -12,4 +12,4 @@ export { Textarea } from './Textarea/Textarea';
 export { Button } from './Button/Button';
 export { TextEditor } from './TextEditor';
 export { ImageSelector } from './ImageSelector';
-export { ImageUploader } from '../../entities/ImageUploader';
+export { ImageUploader } from '../../features/ImageUploader';
