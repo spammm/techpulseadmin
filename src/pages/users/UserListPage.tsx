@@ -1,54 +1,56 @@
 import { useEffect, useState, useTransition } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/appStore';
 import { UserList } from './ui/UserList';
-import { fetchUsers } from '../../features/users';
+import {
+  fetchUsers,
+  setSearchQuery,
+  setUserTypeFilter,
+  setDisableFilter,
+  applyFilters,
+} from '../../entities/users';
 import { Pagination, SearchInput, StatusFilter } from '../../shared/ui';
-
 import styles from './UserListPage.module.scss';
 
 export const UserListPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { users, status, error } = useAppSelector((state) => state.user);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<
-    'all' | 'active' | 'disabled'
-  >('all');
-  const [tab, setTab] = useState<'users' | 'clients'>('users');
+
+  const {
+    status,
+    error,
+    searchQuery,
+    userTypeFilter,
+    disableFilter,
+    filteredUsers,
+  } = useAppSelector((state) => state.users);
+
   const [isPending, startTransition] = useTransition();
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
   useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
-
-  const filteredUsers = users
-    .filter((user) =>
-      tab === 'users' ? user.role !== 'client' : user.role === 'client'
-    )
-    .filter((user) =>
-      searchTerm
-        ? user.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.email?.toLowerCase().includes(searchTerm.toLowerCase())
-        : true
-    )
-    .filter((user) =>
-      statusFilter === 'all'
-        ? true
-        : statusFilter === 'active'
-        ? !user.disable
-        : user.disable
-    );
+    if (status === 'idle') {
+      dispatch(fetchUsers());
+    }
+    dispatch(applyFilters());
+  }, [dispatch, status, searchQuery, userTypeFilter, disableFilter]);
 
   const paginatedUsers = filteredUsers.slice(
     (currentPage - 1) * usersPerPage,
     currentPage * usersPerPage
   );
 
-  const handleTabChange = (newTab: 'users' | 'clients') => {
+  const handleTabChange = (newTab: 'all' | 'users' | 'clients') => {
     startTransition(() => {
-      setTab(newTab);
+      dispatch(setUserTypeFilter(newTab));
     });
+  };
+
+  const handleSearchChange = (value: string) => {
+    dispatch(setSearchQuery(value));
+  };
+
+  const handleStatusFilterChange = (status: 'all' | 'active' | 'disabled') => {
+    dispatch(setDisableFilter(status));
   };
 
   const statusOptions = [
@@ -66,7 +68,18 @@ export const UserListPage: React.FC = () => {
 
       <div className={styles.tabs}>
         <button
-          className={`${styles.tab} ${tab === 'users' ? styles.activeTab : ''}`}
+          className={`${styles.tab} ${
+            userTypeFilter === 'all' ? styles.activeTab : ''
+          }`}
+          onClick={() => handleTabChange('all')}
+          disabled={isPending}
+        >
+          Все
+        </button>
+        <button
+          className={`${styles.tab} ${
+            userTypeFilter === 'users' ? styles.activeTab : ''
+          }`}
           onClick={() => handleTabChange('users')}
           disabled={isPending}
         >
@@ -74,7 +87,7 @@ export const UserListPage: React.FC = () => {
         </button>
         <button
           className={`${styles.tab} ${
-            tab === 'clients' ? styles.activeTab : ''
+            userTypeFilter === 'clients' ? styles.activeTab : ''
           }`}
           onClick={() => handleTabChange('clients')}
           disabled={isPending}
@@ -84,10 +97,10 @@ export const UserListPage: React.FC = () => {
       </div>
 
       <div className={styles.filters}>
-        <SearchInput value={searchTerm} onChange={setSearchTerm} />
+        <SearchInput value={searchQuery} onChange={handleSearchChange} />
         <StatusFilter
-          status={statusFilter}
-          setStatus={setStatusFilter}
+          status={disableFilter}
+          setStatus={handleStatusFilterChange}
           options={statusOptions}
         />
       </div>

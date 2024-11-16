@@ -13,3 +13,6 @@ export { Button } from './Button/Button';
 export { TextEditor } from './TextEditor';
 export { ImageSelector } from './ImageSelector';
 export { ImageUploader } from '../../features/ImageUploader';
+
+export { FormField } from './validationFormFields/FormField';
+export { TextAreaField } from './validationFormFields/TextAreaField';

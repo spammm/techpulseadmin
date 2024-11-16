@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { IUser } from '../../../shared/types/user';
 import { useAppDispatch, useAppSelector } from '../../../shared/model';
-import { deleteUser } from '../../../features/users';
+import { deleteUser } from '../../../entities/users';
 
 import styles from './UserList.module.scss';
 

@@ -1,6 +1,5 @@
-import { useId } from 'react';
+import React, { useId } from 'react';
 import clsx from 'clsx';
-
 import styles from './Input.module.scss';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -8,14 +7,10 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   errorMessage?: string;
 };
 
-export const Input: React.FC<InputProps> = ({
-  label,
-  className,
-  id,
-  errorMessage,
-  required,
-  ...props
-}) => {
+export const Input: React.FC<InputProps> = React.forwardRef<
+  HTMLInputElement,
+  InputProps
+>(({ label, className, id, errorMessage, required, ...props }, ref) => {
   const autoId = useId();
   const inputId = id ? id : autoId;
 
@@ -33,6 +28,7 @@ export const Input: React.FC<InputProps> = ({
       )}
       <input
         id={inputId}
+        ref={ref}
         className={clsx(styles.input, className, {
           [styles.errorInput]: errorMessage,
         })}
@@ -48,4 +44,4 @@ export const Input: React.FC<InputProps> = ({
       )}
     </div>
   );
-};
+});

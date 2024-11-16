@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/appStore';
-import { createUser as createUserAction } from '../../../shared/model/store/userSlice';
+import { createUser as createUserAction } from '..';
 import { checkUsernameExists } from '../../../shared/api/usersApi';
 import { IUser } from '../../../shared/types/user';
 

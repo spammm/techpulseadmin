@@ -1,4 +1,4 @@
-import { CreateUserForm } from '../../features/usersCreate';
+import { CreateUserForm } from '../../entities/users';
 
 import styles from './CreateUserPage.module.scss';
 

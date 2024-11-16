@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import userReducer from '../shared/model/store/userSlice';
 import postsReducer from '../shared/model/store/postsSlice';
 import sourcesReducer from '../shared/model/store/sourcesSlice';
 import imageReducer from '../features/ImageUploader/model/imageSlice';
 import authReducer from '../features/auth/model/authSlice';
 import profileReducer from '../features/profile/model/profileSlice';
 import commentsReducer from '../features/comments/model/commentsSlice';
+import userReducer from '../entities/users/model/userSlice';
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
+    users: userReducer,
     profile: profileReducer,
     posts: postsReducer,
     images: imageReducer,

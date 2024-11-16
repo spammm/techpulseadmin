@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import React, { useId } from 'react';
 import clsx from 'clsx';
 
 import styles from './Textarea.module.scss';
@@ -8,14 +8,10 @@ type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   errorMessage?: string;
 };
 
-export const Textarea: React.FC<TextareaProps> = ({
-  label,
-  className,
-  id,
-  errorMessage,
-  disabled,
-  ...props
-}) => {
+export const Textarea: React.FC<TextareaProps> = React.forwardRef<
+  HTMLTextAreaElement,
+  TextareaProps
+>(({ label, className, id, errorMessage, disabled, ...props }, ref) => {
   const autoId = useId();
   const textareaId = id ? id : autoId;
 
@@ -32,6 +28,7 @@ export const Textarea: React.FC<TextareaProps> = ({
       )}
       <textarea
         id={textareaId}
+        ref={ref}
         className={clsx(styles.textarea, className, {
           [styles.error]: errorMessage,
         })}
@@ -44,4 +41,4 @@ export const Textarea: React.FC<TextareaProps> = ({
       )}
     </div>
   );
-};
+});

@@ -1,6 +1,6 @@
 import { useCreateUser } from '../model/useCreateUser';
 import { Input, Button, Select } from '../../../shared/ui';
-
+import { rolesOptions } from '../model/selectData';
 import styles from './CreateUserForm.module.scss';
 
 export const CreateUserForm: React.FC = () => {
@@ -47,13 +47,7 @@ export const CreateUserForm: React.FC = () => {
           name="role"
           value={formData.role}
           onChange={handleChange}
-          options={[
-            { value: 'user', label: 'Пользователь' },
-            { value: 'admin', label: 'Администратор' },
-            { value: 'writer', label: 'Автор' },
-            { value: 'manager', label: 'Менеджер' },
-            { value: 'client', label: 'Клиент' },
-          ]}
+          options={rolesOptions}
           required
           aria-required="true"
           aria-invalid={!!errors.role}
