@@ -1,4 +1,4 @@
-import { PostList } from '../../features/posts';
+import { PostList } from '../../entities/posts';
 
 export const PostsPage: React.FC = () => {
   return (

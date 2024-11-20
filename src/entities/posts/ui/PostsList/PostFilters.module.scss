@@ -1,0 +1,17 @@
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.searchInput,
+.tagInput,
+.selectInput,
+.authorInput {
+  input {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1;
+  }
+}

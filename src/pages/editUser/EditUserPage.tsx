@@ -5,8 +5,7 @@ import {
   fetchUserById,
   selectUserById,
 } from '../../entities/users';
-import { useAppDispatch } from '../../app/appStore';
-import { useAppSelector } from '../../shared/model';
+import { useAppSelector, useAppDispatch } from '../../shared/model';
 import styles from './EditUserPage.module.scss';
 
 export const EditUserPage: React.FC = () => {

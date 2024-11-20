@@ -7,18 +7,8 @@ import {
   createUser as createUserApi,
   updateUserProfile as updateUserProfileApi,
 } from '../../../shared/api/usersApi';
-import { IUser } from '../../../shared/types/user';
-
-interface UserState {
-  users: { [id: string]: IUser };
-  selectedUser: IUser | null;
-  filteredUsers: IUser[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
-  searchQuery: string;
-  disableFilter: 'all' | 'active' | 'disabled';
-  userTypeFilter: 'all' | 'clients' | 'users';
-}
+import type { UserState } from '../types/userSliceTypes';
+import type { IUser } from '../../../shared/types';
 
 const initialState: UserState = {
   users: {},
@@ -95,7 +85,6 @@ const userSlice = createSlice({
     },
     setUserTypeFilter: (state, action) => {
       state.userTypeFilter = action.payload;
-      console.log('action', action);
     },
     applyFilters: (state) => {
       let filtered = Object.values(state.users);
@@ -171,12 +160,6 @@ const userSlice = createSlice({
       });
   },
 });
-
-export const selectUserById = (state: { users: UserState }, userId: string) =>
-  state.users.users[userId];
-
-export const selectFilteredUsers = (state: { users: UserState }) =>
-  state.users.filteredUsers;
 
 export const {
   setSearchQuery,

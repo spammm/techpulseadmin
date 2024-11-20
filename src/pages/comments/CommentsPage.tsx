@@ -7,7 +7,7 @@ import {
   setSearchTerm,
   setPage,
   CommentList,
-} from '../../features/comments';
+} from '../../entities/comments';
 import { Pagination, SearchInput, StatusFilter } from '../../shared/ui';
 import { useAppDispatch, useAppSelector } from '../../shared/model';
 import { useDebounce } from '../../shared/lib/hooks';

@@ -4,6 +4,7 @@ import { updateUserProfile } from '../model/userSlice';
 import { IUser } from '../../../shared/types/user';
 import { getEditFormDefaultValues } from '../utils/editFormUtils';
 import { FormData } from '../types/editFormTypes';
+import { selectUsersError, selectUsersStatus } from './selectors';
 
 export const useEditUser = (userProfile: IUser) => {
   const [notification, setNotification] = useState<{
@@ -12,7 +13,8 @@ export const useEditUser = (userProfile: IUser) => {
   } | null>(null);
   const dispatch = useAppDispatch();
 
-  const { status, error } = useAppSelector((state) => state.users);
+  const status = useAppSelector(selectUsersStatus);
+  const error = useAppSelector(selectUsersError);
   const isLoading = status === 'loading';
 
   const defaultValues = useMemo(

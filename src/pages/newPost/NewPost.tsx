@@ -1,4 +1,4 @@
-import { CreatePostForm } from '../../features/createPost';
+import { CreatePostForm } from '../../entities/posts';
 
 export const NewPostPage: React.FC = () => {
   return (
