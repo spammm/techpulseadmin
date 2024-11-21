@@ -19,10 +19,17 @@
   padding: 0;
   display: flex;
   justify-content: center;
-}
-
-.controls ul li {
-  margin: 0 15px;
+  width: 100%;
+  li {
+    margin: 0 15px;
+    @media screen and (min-width: 850px) {
+      display: flex;
+      align-items: center;
+      &:last-child {
+        margin-left: auto;
+      }
+    }
+  }
 }
 
 .controls ul li a {
@@ -38,7 +45,7 @@
   font-size: 30px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .controls {
     display: none;
     position: absolute;
@@ -54,6 +61,7 @@
       flex-direction: column;
       gap: 1rem;
       li {
+        margin: 0;
         border-radius: 5px;
         box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.2);
         padding: 10px;
