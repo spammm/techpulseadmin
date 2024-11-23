@@ -48,6 +48,8 @@ class VideoBlot extends BlockEmbed {
       return VideoBlot.convertVkVideoUrl(url);
     } else if (url.includes('t.me')) {
       return VideoBlot.convertTelegramUrl(url);
+    } else if (url.includes('vk.com')) {
+      return VideoBlot.convertVkUrl(url);
     }
     return url;
   }
@@ -109,6 +111,20 @@ class VideoBlot extends BlockEmbed {
       const oid = match[1];
       const id = match[2];
       return `https://vkvideo.ru/video_ext.php?oid=${oid}&id=${id}&hd=2&autoplay=1`;
+    }
+
+    console.warn('Invalid VK video URL:', url);
+    return '';
+  }
+
+  static convertVkUrl(url: string): string {
+    const regex = /video(-?\d+)_(\d+)/;
+    const match = url.match(regex);
+
+    if (match) {
+      const oid = match[1];
+      const id = match[2];
+      return `https://vk.com/video_ext.php?oid=${oid}&id=${id}&hd=2&autoplay=1`;
     }
 
     console.warn('Invalid VK video URL:', url);
