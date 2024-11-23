@@ -24,7 +24,7 @@ class VideoBlot extends BlockEmbed {
   static sanitizeUrl(url: string) {
     if (!url) {
       console.warn('URL is missing or invalid for video embed.');
-      return ''; // Вернуть пустую строку, если URL отсутствует
+      return '';
     }
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
       return VideoBlot.convertYouTubeUrl(url);
@@ -44,11 +44,13 @@ class VideoBlot extends BlockEmbed {
       return VideoBlot.convertTwitterUrl(url);
     } else if (url.includes('twitch.tv')) {
       return VideoBlot.convertTwitchUrl(url);
+    } else if (url.includes('vkvideo.ru')) {
+      return VideoBlot.convertVkVideoUrl(url);
+    } else if (url.includes('t.me')) {
+      return VideoBlot.convertTelegramUrl(url);
     }
     return url;
   }
-
-  // Добавляем методы для каждой платформы
 
   static convertYouTubeUrl(url: string) {
     const videoId = url.includes('youtu.be')
@@ -97,6 +99,27 @@ class VideoBlot extends BlockEmbed {
       ? url.split('/').pop()
       : url.split('/').pop();
     return `https://player.twitch.tv/?video=${videoId}&parent=yourdomain.com`;
+  }
+
+  static convertVkVideoUrl(url: string) {
+    const match = url.match(/video-(\d+)_([\d]+)/);
+    if (match) {
+      const oid = match[1];
+      const id = match[2];
+      return `https://vkvideo.ru/video_ext.php?oid=${oid}&id=${id}&hd=2&autoplay=1`;
+    }
+    console.warn('Invalid vkvideo.ru URL format:', url);
+    return '';
+  }
+
+  static convertTelegramUrl(url: string) {
+    if (url.startsWith('https://t.me/')) {
+      const parts = url.split('/');
+      const channel = parts[3];
+      const messageId = parts[4];
+      return `https://t.me/${channel}/${messageId}?embed=1`;
+    }
+    return url;
   }
 
   static value(node: HTMLElement) {
