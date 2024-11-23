@@ -101,14 +101,17 @@ class VideoBlot extends BlockEmbed {
     return `https://player.twitch.tv/?video=${videoId}&parent=yourdomain.com`;
   }
 
-  static convertVkVideoUrl(url: string) {
-    const match = url.match(/video-(\d+)_([\d]+)/);
+  static convertVkVideoUrl(url: string): string {
+    const regex = /video(-?\d+)_(\d+)/;
+    const match = url.match(regex);
+
     if (match) {
       const oid = match[1];
       const id = match[2];
       return `https://vkvideo.ru/video_ext.php?oid=${oid}&id=${id}&hd=2&autoplay=1`;
     }
-    console.warn('Invalid vkvideo.ru URL format:', url);
+
+    console.warn('Invalid VK video URL:', url);
     return '';
   }
 
